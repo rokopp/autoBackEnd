@@ -1,0 +1,11 @@
+version: "3.7"
+
+services:
+  users-service-db:
+    image: postgres:12-alpine
+    ports:
+      - 5632:5432
+    environment:
+      - POSTGRES_DB=auto24
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
