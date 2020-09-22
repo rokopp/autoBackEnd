@@ -1,10 +1,9 @@
 package com.example.auto24backend.controller;
 
-import com.example.auto24backend.database.Account;
+import com.example.auto24backend.database.Users;
 import com.example.auto24backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.Map;
 
@@ -15,13 +14,21 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/api/registerAccount", method = RequestMethod.POST)
-    public String registerAccount(WebRequest request) {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-        String email = request.getParameter("email");
-        String phoneNumber = request.getParameter("phoneNumber");
-        Account account = new Account(userName, password, email, phoneNumber);
+    public String registerAccount(@RequestBody Map<String, String> body) {
+        System.out.println(body.get("email"));
+        String userName = body.get("userName");
+        String password = body.get("password");
+        String email = body.get("email");
+        String phoneNumber = body.get("phoneNumber");
+        Users users = new Users(userName, password, email, phoneNumber);
 
-        return accountService.saveAccount(account);
+        return accountService.saveAccount(users);
+    }
+
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    public String login(@RequestBody Map<String, String> body) {
+        String userName = body.get("userName");
+        String password = body.get("password");
+        return accountService.login(userName, password);
     }
 }

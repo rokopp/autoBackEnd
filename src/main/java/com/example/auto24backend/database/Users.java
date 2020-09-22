@@ -7,7 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class Account {
+public class Users {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -23,11 +23,14 @@ public class Account {
 
     private String phoneNumber;
 
-    public Account(String userName, String password, String email, String phoneNumber) {
+    public Users(String userName, String password, String email, String phoneNumber) {
         this.userName = userName;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
+    public Users() {
+
+    }
 }
