@@ -1,12 +1,13 @@
 package com.example.auto24backend.database;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter
+@Getter @Setter @NoArgsConstructor
 public class Users {
 
     @Id
@@ -28,9 +29,5 @@ public class Users {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }
-
-    public Users() {
-
     }
 }

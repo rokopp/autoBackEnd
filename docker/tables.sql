@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS car_marks (
+CREATE TABLE IF NOT EXISTS marks (
   id            SERIAL PRIMARY KEY,
   car_mark 		VARCHAR(20) UNIQUE NOT NULL
 );
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS advertisements (
 	description   VARCHAR(255),
 	price 		  VARCHAR(7),
 	FOREIGN KEY (car_mark)
-		REFERENCES car_marks (id),
+		REFERENCES marks (id),
 	FOREIGN KEY (picture)
 		REFERENCES pictures (id),
 	FOREIGN KEY (uploader_ID)
