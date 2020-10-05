@@ -5,10 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Users {
+public class Account {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -24,7 +25,10 @@ public class Users {
 
     private String phoneNumber;
 
-    public Users(String userName, String password, String email, String phoneNumber) {
+    @OneToMany(mappedBy = "account")
+    private List<Advertisement> advertisements;
+
+    public Account(String userName, String password, String email, String phoneNumber) {
         this.userName = userName;
         this.password = password;
         this.email = email;

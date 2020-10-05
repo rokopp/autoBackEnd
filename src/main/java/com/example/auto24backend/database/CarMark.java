@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Marks {
+public class CarMark {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -17,7 +17,10 @@ public class Marks {
     @Column(unique=true)
     private String carMark;
 
-    public Marks(String carMark) {
+    @OneToOne(mappedBy = "car_mark", cascade = CascadeType.ALL)
+    private Advertisement advertisement;
+
+    public CarMark(String carMark) {
         this.carMark = carMark;
     }
 }

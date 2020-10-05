@@ -1,7 +1,7 @@
 package com.example.auto24backend.service;
 
-import com.example.auto24backend.database.Marks;
-import com.example.auto24backend.database.MarksRepository;
+import com.example.auto24backend.database.CarMark;
+import com.example.auto24backend.repository.CarMarkRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,17 +10,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CarMarksService {
+public class CarMarkService {
 
     @Autowired
-    private MarksRepository marksRepository;
+    private CarMarkRepository carMarkRepository;
 
     public String findAll() {
 
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            List<Marks> marks = marksRepository.findAllByOrderByCarMark();
+            List<CarMark> marks = carMarkRepository.findAllByOrderByCarMark();
 
             return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(marks);
 
@@ -28,6 +28,5 @@ public class CarMarksService {
             return e.getMessage();
         }
     }
-
 
 }

@@ -1,6 +1,6 @@
 package com.example.auto24backend.controller;
 
-import com.example.auto24backend.database.Users;
+import com.example.auto24backend.database.Account;
 import com.example.auto24backend.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +20,9 @@ public class AccountController {
         String password = body.get("password");
         String email = body.get("email");
         String phoneNumber = body.get("phoneNumber");
-        Users users = new Users(userName, password, email, phoneNumber);
+        Account account = new Account(userName, password, email, phoneNumber);
 
-        return accountService.saveAccount(users);
+        return accountService.saveAccount(account);
     }
 
     @RequestMapping(value = "/api/login", method = RequestMethod.POST)
