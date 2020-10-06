@@ -1,5 +1,6 @@
 package com.example.auto24backend.database;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class Advertisement {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(unique = true, length = 6)
     private String carSerialNr;
@@ -31,7 +32,8 @@ public class Advertisement {
     @JoinColumn(name = "uploader_id")
     private Account account;
 
-    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Picture> pictures;
 
     public Advertisement(String carSerialNr, String description, String price, CarMark carMark, Account account) {
