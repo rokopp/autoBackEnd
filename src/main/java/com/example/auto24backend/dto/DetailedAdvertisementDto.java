@@ -1,5 +1,6 @@
 package com.example.auto24backend.dto;
 
+import com.example.auto24backend.database.CarMark;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ public class DetailedAdvertisementDto {
 
     private String price;
 
-    private String carMark;
+    private CarMark carMark;
 
     private String description;
 
