@@ -20,7 +20,7 @@ public class PictureService {
     @Autowired
     private PictureRepository pictureRepository;
 
-    public List<PictureDto> getPictures(Advertisement advertisement) throws IOException {
+    public List<PictureDto> getPictures(Advertisement advertisement) {
         List<PictureDto> pictureDtoList = new ArrayList<>();
         List<Picture> pictures = pictureRepository.findByAdvertisement(advertisement);
         for(Picture picture: pictures) {
@@ -29,9 +29,14 @@ public class PictureService {
         return pictureDtoList;
     }
 
-    private PictureDto convert(Picture picture) throws IOException {
+    private PictureDto convert(Picture picture) {
         String filePath = picture.getFilePath() + picture.getFileName();
-        byte[] bytes = Files.readAllBytes(Paths.get(filePath));
+        byte[] bytes = new byte[0];
+        try {
+            bytes = Files.readAllBytes(Paths.get(filePath));
+        } catch (IOException e) {
+            return null;
+        }
         PictureDto pictureDto = new PictureDto();
         pictureDto.setId(picture.getId());
         pictureDto.setPictureFile(bytes);

@@ -21,7 +21,7 @@ public class AdvertisementService {
     @Autowired
     private PictureService pictureService;
 
-    public List<AdvertisementDto> findAll() throws IOException {
+    public List<AdvertisementDto> findAll() {
         List<AdvertisementDto> advertisementDtoList = new ArrayList<>();
         List<Advertisement> advertisements =  advertisementRepository.findAll();
         for(Advertisement advertisement : advertisements) {
@@ -34,7 +34,7 @@ public class AdvertisementService {
         return null;
     }
 
-    private AdvertisementDto convert(Advertisement advertisement) throws IOException {
+    private AdvertisementDto convert(Advertisement advertisement) {
         AdvertisementDto advertisementDto = new AdvertisementDto();
         advertisementDto.setId(advertisement.getId());
         advertisementDto.setCarMark(advertisement.getCarMark());
