@@ -43,8 +43,7 @@ public class PictureService {
         return pictureDto;
     }
 
-    public String savePicture(MultipartFile multipartFile){
+    public void savePicture(MultipartFile multipartFile){
         //TODO
-        return null;
     }
 }
