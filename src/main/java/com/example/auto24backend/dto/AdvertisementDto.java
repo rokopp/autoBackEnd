@@ -15,4 +15,5 @@ public class AdvertisementDto {
     private CarMark carMark;
 
     private PictureDto picture;
+
 }

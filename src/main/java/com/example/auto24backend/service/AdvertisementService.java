@@ -2,12 +2,15 @@ package com.example.auto24backend.service;
 
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.dto.AdvertisementDto;
+import com.example.auto24backend.dto.DetailedAdvertisementDto;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdvertisementService {
@@ -15,7 +18,10 @@ public class AdvertisementService {
     @Autowired
     private AdvertisementRepository advertisementRepository;
 
-    public List<AdvertisementDto> findAll() {
+    @Autowired
+    private PictureService pictureService;
+
+    public List<AdvertisementDto> findAll() throws IOException {
         List<AdvertisementDto> advertisementDtoList = new ArrayList<>();
         List<Advertisement> advertisements =  advertisementRepository.findAll();
         for(Advertisement advertisement : advertisements) {
@@ -24,13 +30,17 @@ public class AdvertisementService {
         return advertisementDtoList;
     }
 
-    private AdvertisementDto convert(Advertisement advertisement) {
+    public DetailedAdvertisementDto findById(Long id) {
+        return null;
+    }
+
+    private AdvertisementDto convert(Advertisement advertisement) throws IOException {
         AdvertisementDto advertisementDto = new AdvertisementDto();
         advertisementDto.setId(advertisement.getId());
         advertisementDto.setCarMark(advertisement.getCarMark());
         advertisementDto.setPrice(advertisement.getPrice());
-        //Add later picture so dto
-        //TODO
+        advertisementDto.setPicture(pictureService.getPictures(advertisement).get(0));
         return advertisementDto;
     }
+
 }

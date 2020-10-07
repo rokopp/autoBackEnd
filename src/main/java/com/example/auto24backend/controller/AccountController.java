@@ -15,13 +15,11 @@ public class AccountController {
 
     @RequestMapping(value = "/api/registerAccount", method = RequestMethod.POST)
     public String registerAccount(@RequestBody Map<String, String> body) {
-        System.out.println(body.get("email"));
         String userName = body.get("userName");
         String password = body.get("password");
         String email = body.get("email");
         String phoneNumber = body.get("phoneNumber");
         Account account = new Account(userName, password, email, phoneNumber);
-
         return accountService.saveAccount(account);
     }
 
