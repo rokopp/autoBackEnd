@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("api")
 public class AdvertisementController {
 
     @Autowired
     private AdvertisementService advertisementService;
 
-    @GetMapping("/api/ads")
+    @GetMapping
     public List<AdvertisementDto> getAdvertisements() {
         return advertisementService.findAll();
     }
@@ -26,5 +26,4 @@ public class AdvertisementController {
     public DetailedAdvertisementDto getAdvertisement(@PathVariable Long id) {
         return advertisementService.findById(id);
     }
-
 }

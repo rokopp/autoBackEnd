@@ -3,6 +3,7 @@ package com.example.auto24backend.service;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.dto.DetailedAdvertisementDto;
+import com.example.auto24backend.dto.UserDto;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class AdvertisementService {
     }
 
     public DetailedAdvertisementDto findById(Long id) {
-        return null;
+        Advertisement advertisement = advertisementRepository.findById(id).get();
+        return convertDetailed(advertisement);
     }
 
     private AdvertisementDto convert(Advertisement advertisement) {
@@ -39,6 +41,26 @@ public class AdvertisementService {
         advertisementDto.setPrice(advertisement.getPrice());
         advertisementDto.setPicture(pictureService.getPictures(advertisement).get(0));
         return advertisementDto;
+    }
+
+    private DetailedAdvertisementDto convertDetailed(Advertisement advertisement) {
+        DetailedAdvertisementDto detailedAdvertisementDto = new DetailedAdvertisementDto();
+        detailedAdvertisementDto.setId(advertisement.getId());
+        detailedAdvertisementDto.setCarMark(advertisement.getCarMark());
+        detailedAdvertisementDto.setDescription(advertisement.getDescription());
+        detailedAdvertisementDto.setSerialNr(advertisement.getCarSerialNr());
+        detailedAdvertisementDto.setPrice(advertisement.getPrice());
+        detailedAdvertisementDto.setPictureList(pictureService.getPictures(advertisement));
+        detailedAdvertisementDto.setUser(convertUser(advertisement));
+        return detailedAdvertisementDto;
+    }
+
+    private UserDto convertUser(Advertisement advertisement) {
+        UserDto userDto = new UserDto();
+        userDto.setId(advertisement.getAccount().getId());
+        userDto.setEmail(advertisement.getAccount().getEmail());
+        userDto.setPhoneNumber(advertisement.getAccount().getPhoneNumber());
+        return userDto;
     }
 
 }

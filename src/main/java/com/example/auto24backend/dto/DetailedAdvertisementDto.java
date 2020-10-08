@@ -14,6 +14,8 @@ public class DetailedAdvertisementDto {
 
     private String price;
 
+    private String serialNr;
+
     private CarMark carMark;
 
     private String description;
