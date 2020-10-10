@@ -2,11 +2,14 @@ package com.example.auto24backend.service;
 
 
 import com.example.auto24backend.database.Account;
+import com.example.auto24backend.database.Advertisement;
+import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AccountService {
@@ -15,35 +18,35 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public String saveAccount(Account account) {
-
-        if(account.getEmail() == null) {
-            return "wrong Email";
-        } else if (account.getPassword() == null){
-            return "wrong Password";
-        } else if (account.getUserName() == null){
-            return "wrong username";
-        } else if (account.getPhoneNumber() == null){
-            return "wrong phone number";
-        }
-
-        try
-        {
+        try {
             accountRepository.save(account);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             return "An account already exists with this name and/or e-mail. Please try again.";
         }
         return "success";
     }
     
-    public String login(String userName, String password) {
+    public String login(Map<String, String> body) {
+        String userName = body.get("userName");
+        String password = body.get("password");
         List<Account> accountList = accountRepository.findByUserNameAndPassword(userName, password);
         if (accountList.size() == 1) {
             return "success";
         } else {
             return "No account found";
         }
-    } 
+    }
+
+    public List<Account> findByName(String userName) {
+        return accountRepository.findByUserName(userName);
+    }
+
+    public AccountDto convertAccount(Advertisement advertisement) {
+        return AccountDto.builder()
+                .id(advertisement.getAccount().getId())
+                .email(advertisement.getAccount().getEmail())
+                .phoneNumber(advertisement.getAccount().getPhoneNumber())
+                .build();
+    }
 
 }

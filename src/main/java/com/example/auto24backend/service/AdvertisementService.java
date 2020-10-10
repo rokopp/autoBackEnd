@@ -1,15 +1,18 @@
 package com.example.auto24backend.service;
 
+import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
+import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.dto.AdvertisementDto;
-import com.example.auto24backend.dto.DetailedAdvertisementDto;
-import com.example.auto24backend.dto.UserDto;
+import com.example.auto24backend.repository.AccountRepository;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AdvertisementService {
@@ -20,6 +23,9 @@ public class AdvertisementService {
     @Autowired
     private PictureService pictureService;
 
+    @Autowired
+    private AccountService accountService;
+
     public List<AdvertisementDto> findAll() {
         List<AdvertisementDto> advertisementDtoList = new ArrayList<>();
         List<Advertisement> advertisements =  advertisementRepository.findAll();
@@ -29,38 +35,31 @@ public class AdvertisementService {
         return advertisementDtoList;
     }
 
-    public DetailedAdvertisementDto findById(Long id) {
+    public AdvertisementDto findById(Long id) {
         Advertisement advertisement = advertisementRepository.findById(id).get();
-        return convertDetailed(advertisement);
+        return convert(advertisement);
+    }
+
+    public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
+        List<Account> accounts = accountService.findByName(userName);
+        if (!(accounts.size() == 1)) {
+            return "Wrong account";
+        }
+        advertisement.setAccount(accounts.get(0));
+        advertisementRepository.save(advertisement);
+        pictureService.savePicture(multipartFile, advertisement);
+        return "Advertisement successfully saved";
     }
 
     private AdvertisementDto convert(Advertisement advertisement) {
-        AdvertisementDto advertisementDto = new AdvertisementDto();
-        advertisementDto.setId(advertisement.getId());
-        advertisementDto.setCarMark(advertisement.getCarMark());
-        advertisementDto.setPrice(advertisement.getPrice());
-        advertisementDto.setPicture(pictureService.getPictures(advertisement).get(0));
-        return advertisementDto;
+        return AdvertisementDto.builder()
+                .id(advertisement.getId())
+                .carMark(advertisement.getCarMark())
+                .description(advertisement.getDescription())
+                .serialNr(advertisement.getCarSerialNr())
+                .price(advertisement.getPrice())
+                .pictureList(pictureService.getPictures(advertisement))
+                .account(accountService.convertAccount(advertisement))
+                .build();
     }
-
-    private DetailedAdvertisementDto convertDetailed(Advertisement advertisement) {
-        DetailedAdvertisementDto detailedAdvertisementDto = new DetailedAdvertisementDto();
-        detailedAdvertisementDto.setId(advertisement.getId());
-        detailedAdvertisementDto.setCarMark(advertisement.getCarMark());
-        detailedAdvertisementDto.setDescription(advertisement.getDescription());
-        detailedAdvertisementDto.setSerialNr(advertisement.getCarSerialNr());
-        detailedAdvertisementDto.setPrice(advertisement.getPrice());
-        detailedAdvertisementDto.setPictureList(pictureService.getPictures(advertisement));
-        detailedAdvertisementDto.setUser(convertUser(advertisement));
-        return detailedAdvertisementDto;
-    }
-
-    private UserDto convertUser(Advertisement advertisement) {
-        UserDto userDto = new UserDto();
-        userDto.setId(advertisement.getAccount().getId());
-        userDto.setEmail(advertisement.getAccount().getEmail());
-        userDto.setPhoneNumber(advertisement.getAccount().getPhoneNumber());
-        return userDto;
-    }
-
 }

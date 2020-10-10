@@ -43,7 +43,12 @@ public class PictureService {
         return pictureDto;
     }
 
-    public void savePicture(MultipartFile multipartFile){
-        //TODO
+    public void savePicture(MultipartFile multipartFile, Advertisement advertisement) {
+        Picture picture = Picture.builder()
+                .filePath("/pictures/")
+                .fileName(multipartFile.getOriginalFilename())
+                .advertisement(advertisement)
+                .build();
+        pictureRepository.save(picture);
     }
 }
