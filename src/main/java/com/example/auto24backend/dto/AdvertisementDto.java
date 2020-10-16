@@ -1,19 +1,16 @@
 package com.example.auto24backend.dto;
 
 import com.example.auto24backend.database.CarMark;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor
 public class AdvertisementDto {
 
     private Long id;
 
-    private String price;
+    private Integer price;
 
     private String serialNr;
 

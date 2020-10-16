@@ -1,11 +1,8 @@
 package com.example.auto24backend.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter @Setter @NoArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor
 public class AccountDto {
 
     private Long id;

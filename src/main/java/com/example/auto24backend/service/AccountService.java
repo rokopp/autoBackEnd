@@ -17,7 +17,22 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public String saveAccount(Account account) {
+    public String saveAccount(Map<String, String> register) {
+        if(register.get("email") == null) {
+            return "wrong Email";
+        } else if (register.get("password") == null){
+            return "wrong Password";
+        } else if (register.get("userName") == null){
+            return "wrong username";
+        } else if (register.get("phoneNumber") == null){
+            return "wrong phone number";
+        }
+        Account account = Account.builder()
+                .email(register.get("email"))
+                .phoneNumber(register.get("phoneNumber"))
+                .password(register.get("password"))
+                .userName(register.get("userName"))
+                .build();
         try {
             accountRepository.save(account);
         } catch (Exception e) {

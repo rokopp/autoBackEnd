@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS advertisement (
 	uploader_ID   INT NOT NULL,
 	car_serial_nr VARCHAR(6) UNIQUE NOT NULL,
 	description   VARCHAR(255),
-	price 		  VARCHAR(7),
+	price 		  integer,
 	FOREIGN KEY (car_mark_id)
 		REFERENCES car_mark (id),
 	FOREIGN KEY (uploader_ID)

@@ -9,26 +9,23 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RestController("/api/ads")
+@RestController("ads")
 public class AdvertisementController {
 
     @Autowired
     private AdvertisementService advertisementService;
 
-    @GetMapping
+    @GetMapping("/api/ads")
     public List<AdvertisementDto> getAdvertisements() {
         return advertisementService.findAll();
     }
 
-    @GetMapping("{id}")
-    public AdvertisementDto getAdvertisement(@PathVariable Long id) {
-        return advertisementService.findById(id);
-    }
-
-    @PostMapping
+    @PostMapping("/api/ads")
     public String saveAdvertisement(@RequestPart("userName") String userName,
                                     @RequestPart("file") MultipartFile file,
                                     @RequestPart("ad") Advertisement advertisement) {
         return advertisementService.save(advertisement, userName, file);
     }
+
+    
 }

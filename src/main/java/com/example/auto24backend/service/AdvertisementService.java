@@ -2,9 +2,7 @@ package com.example.auto24backend.service;
 
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
-import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.dto.AdvertisementDto;
-import com.example.auto24backend.repository.AccountRepository;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AdvertisementService {
@@ -33,11 +30,6 @@ public class AdvertisementService {
             advertisementDtoList.add(convert(advertisement));
         }
         return advertisementDtoList;
-    }
-
-    public AdvertisementDto findById(Long id) {
-        Advertisement advertisement = advertisementRepository.findById(id).get();
-        return convert(advertisement);
     }
 
     public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {

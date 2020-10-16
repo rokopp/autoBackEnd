@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -31,7 +32,7 @@ public class PictureService {
 
     private PictureDto convert(Picture picture) {
         String filePath = picture.getFilePath() + picture.getFileName();
-        byte[] bytes = new byte[0];
+        byte[] bytes;
         try {
             bytes = Files.readAllBytes(Paths.get(filePath));
         } catch (IOException e) {
@@ -44,6 +45,13 @@ public class PictureService {
     }
 
     public void savePicture(MultipartFile multipartFile, Advertisement advertisement) {
+        try {
+            File file = new File("/pictures/" + multipartFile.getOriginalFilename());
+            multipartFile.transferTo(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
         Picture picture = Picture.builder()
                 .filePath("/pictures/")
                 .fileName(multipartFile.getOriginalFilename())

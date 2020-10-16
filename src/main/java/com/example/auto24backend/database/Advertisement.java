@@ -1,20 +1,17 @@
 package com.example.auto24backend.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @Builder
+@Getter @Setter @NoArgsConstructor @Builder @AllArgsConstructor
 public class Advertisement {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true, length = 6)
@@ -23,7 +20,7 @@ public class Advertisement {
     private String description;
 
     @Column(length = 7)
-    private String price;
+    private Integer price;
 
     @OneToOne
     @JoinColumn(name = "car_mark_id")
@@ -37,7 +34,7 @@ public class Advertisement {
     @JsonIgnore
     private List<Picture> pictures;
 
-    public Advertisement(String carSerialNr, String description, String price, CarMark carMark, Account account) {
+    public Advertisement(String carSerialNr, String description, Integer price, CarMark carMark, Account account) {
         this.carSerialNr = carSerialNr;
         this.description = description;
         this.price = price;

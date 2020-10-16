@@ -1,18 +1,17 @@
 package com.example.auto24backend.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter @NoArgsConstructor @Builder
+@AllArgsConstructor
 public class CarMark {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique=true)
@@ -25,4 +24,5 @@ public class CarMark {
     public CarMark(String carMark) {
         this.carMark = carMark;
     }
+
 }
