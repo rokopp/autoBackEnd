@@ -1,6 +1,7 @@
 package com.example.auto24backend.controller;
 
 import com.example.auto24backend.database.Advertisement;
+import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,5 +28,14 @@ public class AdvertisementController {
         return advertisementService.save(advertisement, userName, file);
     }
 
-    
+    @GetMapping("/api/search")
+    public List<AdvertisementDto> findByPrice(@PathVariable("start") Integer start,
+                                              @PathVariable("stop") Integer stop) {
+        return advertisementService.findByPrice(start, stop);
+    }
+
+    @PostMapping("/api/search")
+    public List<AdvertisementDto> findByCarMark(@RequestBody CarMark carMark) {
+        return advertisementService.findByCarMark(carMark);
+    }
 }

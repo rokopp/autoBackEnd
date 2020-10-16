@@ -2,6 +2,7 @@ package com.example.auto24backend.service;
 
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
+import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +25,37 @@ public class AdvertisementService {
     private AccountService accountService;
 
     public List<AdvertisementDto> findAll() {
-        List<AdvertisementDto> advertisementDtoList = new ArrayList<>();
         List<Advertisement> advertisements =  advertisementRepository.findAll();
-        for(Advertisement advertisement : advertisements) {
-            advertisementDtoList.add(convert(advertisement));
-        }
-        return advertisementDtoList;
+        return getAdvertisementDtos(advertisements);
     }
 
     public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
         List<Account> accounts = accountService.findByName(userName);
         if (!(accounts.size() == 1)) {
-            return "Wrong account";
+            return "Wrong account.";
         }
         advertisement.setAccount(accounts.get(0));
-        advertisementRepository.save(advertisement);
-        pictureService.savePicture(multipartFile, advertisement);
+        Advertisement ad = advertisementRepository.save(advertisement);
+        pictureService.savePicture(multipartFile, ad);
         return "Advertisement successfully saved";
+    }
+
+    public List<AdvertisementDto> findByCarMark(CarMark carMark) {
+        List<Advertisement> advertisements =  advertisementRepository.findAllByCarMark(carMark);
+        return getAdvertisementDtos(advertisements);
+    }
+
+    public List<AdvertisementDto> findByPrice(Integer start, Integer stop) {
+        List<Advertisement> advertisements =  advertisementRepository.findAllByPriceBetween(start, stop);
+        return getAdvertisementDtos(advertisements);
+    }
+
+    private List<AdvertisementDto> getAdvertisementDtos(List<Advertisement> advertisements) {
+        List<AdvertisementDto> advertisementDtoList = new ArrayList<>();
+        for (Advertisement advertisement : advertisements) {
+            advertisementDtoList.add(convert(advertisement));
+        }
+        return advertisementDtoList;
     }
 
     private AdvertisementDto convert(Advertisement advertisement) {
