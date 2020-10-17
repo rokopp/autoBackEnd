@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RestController("ads")
+@RestController
 public class AdvertisementController {
 
     @Autowired
@@ -28,13 +28,13 @@ public class AdvertisementController {
         return advertisementService.save(advertisement, userName, file);
     }
 
-    @GetMapping("/api/search")
+    @GetMapping("/api/ads/search")
     public List<AdvertisementDto> findByPrice(@PathVariable("start") Integer start,
                                               @PathVariable("stop") Integer stop) {
         return advertisementService.findByPrice(start, stop);
     }
 
-    @PostMapping("/api/search")
+    @PostMapping("/api/ads/search")
     public List<AdvertisementDto> findByCarMark(@RequestBody CarMark carMark) {
         return advertisementService.findByCarMark(carMark);
     }
