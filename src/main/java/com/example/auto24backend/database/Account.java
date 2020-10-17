@@ -25,14 +25,7 @@ public class Account {
 
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "account", cascade = {CascadeType.ALL})
     @JsonIgnore
     private List<Advertisement> advertisements;
-
-    public Account(String userName, String password, String email, String phoneNumber) {
-        this.userName = userName;
-        this.password = password;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-    }
 }

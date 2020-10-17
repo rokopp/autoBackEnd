@@ -22,15 +22,15 @@ public class AdvertisementController {
     }
 
     @PostMapping("/api/ads")
-    public String saveAdvertisement(@RequestPart("userName") String userName,
-                                    @RequestPart("file") MultipartFile file,
-                                    @RequestPart("ad") Advertisement advertisement) {
+    public String saveAdvertisement(@RequestParam(value = "userName") String userName,
+                                    @RequestParam(value = "file", required = false) MultipartFile file,
+                                    @RequestParam(value =  "ad") Advertisement advertisement) {
         return advertisementService.save(advertisement, userName, file);
     }
 
     @GetMapping("/api/ads/search")
-    public List<AdvertisementDto> findByPrice(@PathVariable("start") Integer start,
-                                              @PathVariable("stop") Integer stop) {
+    public List<AdvertisementDto> findByPrice(@RequestParam("start") Integer start,
+                                              @RequestParam("stop") Integer stop) {
         return advertisementService.findByPrice(start, stop);
     }
 

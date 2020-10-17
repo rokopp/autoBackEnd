@@ -19,13 +19,13 @@ public class AccountService {
 
     public String saveAccount(Map<String, String> register) {
         if(register.get("email") == null) {
-            return "wrong Email";
+            return "Wrong email";
         } else if (register.get("password") == null){
-            return "wrong Password";
+            return "Wrong password";
         } else if (register.get("userName") == null){
-            return "wrong username";
+            return "Wrong username";
         } else if (register.get("phoneNumber") == null){
-            return "wrong phone number";
+            return "Wrong phone number";
         }
         Account account = Account.builder()
                 .email(register.get("email"))

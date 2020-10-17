@@ -4,6 +4,7 @@ import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
+import com.example.auto24backend.exceptions.InvalidAdvertisementException;
 import com.example.auto24backend.repository.AdvertisementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,10 +34,14 @@ public class AdvertisementService {
         List<Account> accounts = accountService.findByName(userName);
         if (!(accounts.size() == 1)) {
             return "Wrong account.";
+        } else if (advertisement.getId() != null) {
+            return "Wrong id.";
         }
         advertisement.setAccount(accounts.get(0));
-        Advertisement ad = advertisementRepository.save(advertisement);
-        pictureService.savePicture(multipartFile, ad);
+        advertisementRepository.save(advertisement);
+        if (multipartFile != null) {
+            pictureService.savePicture(multipartFile, advertisement);
+        }
         return "Advertisement successfully saved";
     }
 
@@ -46,6 +51,9 @@ public class AdvertisementService {
     }
 
     public List<AdvertisementDto> findByPrice(Integer start, Integer stop) {
+        if (start.equals(stop)) {
+            throw new InvalidAdvertisementException("Price cant be the same.");
+        }
         List<Advertisement> advertisements =  advertisementRepository.findAllByPriceBetween(start, stop);
         return getAdvertisementDtos(advertisements);
     }

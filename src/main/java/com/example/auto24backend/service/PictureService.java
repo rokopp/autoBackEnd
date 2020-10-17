@@ -45,6 +45,11 @@ public class PictureService {
     }
 
     public void savePicture(MultipartFile multipartFile, Advertisement advertisement) {
+        if (!multipartFile.getOriginalFilename().endsWith(".jpg")) {
+            return;
+        } else if(!multipartFile.getOriginalFilename().endsWith(".png")) {
+            return;
+        }
         try {
             File file = new File("/pictures/" + multipartFile.getOriginalFilename());
             multipartFile.transferTo(file);

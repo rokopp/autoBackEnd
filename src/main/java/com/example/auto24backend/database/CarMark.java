@@ -17,12 +17,7 @@ public class CarMark {
     @Column(unique=true)
     private String carMark;
 
-    @OneToOne(mappedBy = "carMark", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "carMark", cascade = {CascadeType.ALL})
     @JsonIgnore
     private Advertisement advertisement;
-
-    public CarMark(String carMark) {
-        this.carMark = carMark;
-    }
-
 }

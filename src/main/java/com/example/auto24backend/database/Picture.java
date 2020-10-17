@@ -20,11 +20,4 @@ public class Picture {
     @ManyToOne
     @JoinColumn(name = "advertisement_id")
     private Advertisement advertisement;
-
-
-    public Picture(String fileName, String filePath, Advertisement advertisement) {
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.advertisement = advertisement;
-    }
 }

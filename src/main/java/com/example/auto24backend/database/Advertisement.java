@@ -30,7 +30,7 @@ public class Advertisement {
     @JoinColumn(name = "uploader_id")
     private Account account;
 
-    @OneToMany(mappedBy = "advertisement", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "advertisement", cascade = {CascadeType.ALL})
     @JsonIgnore
     private List<Picture> pictures;
 
