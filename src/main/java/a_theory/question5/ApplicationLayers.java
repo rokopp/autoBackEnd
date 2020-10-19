@@ -22,6 +22,9 @@ public class ApplicationLayers {
     //todo p3
     // We use objects to transport data between different layers.
     // What is the difference between Entity and Dto? What is same between them?
-    // Answer:
+    // Answer: Entities should encapsulate their state, which is why they say getter/setters are evil,
+    // since they break encapsulation. DTOs allow Entities to export data based on their internal state.
+    // DTOs are pure data structures, just getters/setters, and encapsulate nothing.
+    // source: https://www.reddit.com/r/java/comments/6ph54x/entities_or_dtos_when_should_you_use_which/
 
 }
