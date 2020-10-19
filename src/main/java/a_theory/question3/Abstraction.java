@@ -15,7 +15,7 @@ public class Abstraction {
     // It should have at least 1 property and 1 method.
     // Create it as a real java class inside this package.
 
-    abstract class Animal{
+/*    abstract class Animal{
         public abstract String nickName();
     }
     public class Pigeon extends Animal{
@@ -27,5 +27,5 @@ public class Abstraction {
             Animal mysteryAnimal = new Pigeon();
             System.out.println(mysteryAnimal.nickName());
         }
-    }
+    }*/
 }
