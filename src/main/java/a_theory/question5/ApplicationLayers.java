@@ -7,17 +7,17 @@ public class ApplicationLayers {
 
     //todo p1
     // Name 3 layers of back-end architecture. Give a brief description for each.
-    // 1
-    // Description:
-    // 2
-    // Description:
-    // 3
-    // Description:
+    // 1 Application layer
+    // Description: Provides services to the software through which the user requests network services.
+    // 2 Domain layer
+    // Description: Interacts with the Data and Presentation layer using interfaces and interactors
+    // 3 Data access layer
+    // Description: Provides a simple interface that allows an application to access a persistent data store.
 
     //todo p2
     // Do you agree with the architects? Why?
-    // Yes/No
-    // Because:
+    // Yes
+    // Because: Easier to read. Makes more structured which helps with readability.
 
     //todo p3
     // We use objects to transport data between different layers.

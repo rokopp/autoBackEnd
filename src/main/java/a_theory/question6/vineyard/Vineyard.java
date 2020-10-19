@@ -1,4 +1,6 @@
-package a_theory.question6.vineyard.database;
+package a_theory.question6.vineyard;
+
+import a_theory.question6.vineyard.Wine;
 
 import java.util.List;
 
