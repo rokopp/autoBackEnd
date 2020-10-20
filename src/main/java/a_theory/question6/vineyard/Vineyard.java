@@ -1,9 +1,10 @@
 package a_theory.question6.vineyard;
 
-import a_theory.question6.vineyard.Wine;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class Vineyard {
 
     //todo for question 6 there are 4 assignments in total

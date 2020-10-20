@@ -23,6 +23,4 @@ public class Wine {
     private String grape;
 
     private Integer year;
-
-    private String description;
 }
