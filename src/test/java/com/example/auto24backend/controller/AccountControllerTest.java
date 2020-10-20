@@ -59,6 +59,7 @@ class AccountControllerTest {
         HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
         HttpEntity<String> request2 = new HttpEntity<>(body2.toString(), headers);
 
+
         this.restTemplate.postForEntity("/api/register", request, String.class);
         ResponseEntity<String> result2 = this.restTemplate.postForEntity("/api/register", request2, String.class);
 
