@@ -38,9 +38,10 @@ public class AdvertisementService {
             return "Wrong id.";
         }
         advertisement.setAccount(accounts.get(0));
-        advertisementRepository.save(advertisement);
+        Advertisement obj = advertisementRepository.save(advertisement);
+        advertisementRepository.flush();
         if (multipartFile != null) {
-            pictureService.savePicture(multipartFile, advertisement);
+            pictureService.savePicture(multipartFile, obj);
         }
         return "Advertisement successfully saved";
     }

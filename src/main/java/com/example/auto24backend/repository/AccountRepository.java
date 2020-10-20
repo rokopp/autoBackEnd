@@ -11,5 +11,4 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, L
 
     List<Account> findByUserNameAndPassword(String userName, String password);
     List<Account> findByUserName(String userName);
-
 }

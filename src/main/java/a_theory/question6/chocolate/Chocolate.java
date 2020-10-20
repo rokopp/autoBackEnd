@@ -1,7 +1,10 @@
 package a_theory.question6.chocolate;
 
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class Chocolate {
 
     //todo for question 6 there are 4 assignments in total

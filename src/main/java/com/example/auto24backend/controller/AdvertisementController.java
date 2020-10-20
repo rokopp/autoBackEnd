@@ -10,31 +10,32 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+@RequestMapping("api/ads")
 @RestController
 public class AdvertisementController {
 
     @Autowired
     private AdvertisementService advertisementService;
 
-    @GetMapping("/api/ads")
+    @GetMapping
     public List<AdvertisementDto> getAdvertisements() {
         return advertisementService.findAll();
     }
 
-    @PostMapping("/api/ads")
+    @PostMapping
     public String saveAdvertisement(@RequestParam(value = "userName") String userName,
                                     @RequestParam(value = "file", required = false) MultipartFile file,
                                     @RequestParam(value =  "ad") Advertisement advertisement) {
         return advertisementService.save(advertisement, userName, file);
     }
 
-    @GetMapping("/api/ads/search")
+    @GetMapping("/search")
     public List<AdvertisementDto> findByPrice(@RequestParam("start") Integer start,
                                               @RequestParam("stop") Integer stop) {
         return advertisementService.findByPrice(start, stop);
     }
 
-    @PostMapping("/api/ads/search")
+    @PostMapping("/search")
     public List<AdvertisementDto> findByCarMark(@RequestBody CarMark carMark) {
         return advertisementService.findByCarMark(carMark);
     }
