@@ -1,4 +1,4 @@
-package a_theory.question6.vineyard.database;
+package a_theory.question6.vineyard;
 
 import lombok.Getter;
 import lombok.Setter;

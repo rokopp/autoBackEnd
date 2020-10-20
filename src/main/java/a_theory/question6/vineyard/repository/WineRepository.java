@@ -1,6 +1,6 @@
 package a_theory.question6.vineyard.repository;
 
-import a_theory.question6.vineyard.database.Wine;
+import a_theory.question6.vineyard.Wine;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
