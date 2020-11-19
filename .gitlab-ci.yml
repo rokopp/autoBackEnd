@@ -35,13 +35,14 @@ deploy database:
   services:
     - docker:dind
   stage: deploy
-  only:
-    refs:
-      - database
   tags:
     - auto24
   script:
+    - "curl -X POST -F token=TOKEN -F ref=REF_NAME https://gitlab.cs.ttu.ee/api/v4/projects/14834/trigger/pipeline"
     - docker-compose -f docker/docker-compose.yml up
+  only:
+    refs:
+      - database
 
 deploy auto24:
   stage: deploy
