@@ -1,4 +1,5 @@
 image: docker:latest
+
 services:
   - docker:dind
 
@@ -39,10 +40,18 @@ deploy auto24:
       - master
   tags:
     - auto24
-  script:
+#  script:
 #    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
 #    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
 #    - cp -r build/libs/. ~/api-deployment # cp - copy build/libs is where
 #    - sudo service auto24 restart  # this requires sudo rights for gitlab user
-    - mvn $MAVEN_CLI_OPTS deploy
+#    - mvn $MAVEN_CLI_OPTS deploy
+  script:
+    - sudo apt-get install -y python3-pip
+    - sudo pip3 install --upgrade setuptools
+    - sudo pip3 install docker-compose
+    - sudo docker image prune -f
+    - docker-compose build --no-cache
+    - docker-compose up -d
+
 
