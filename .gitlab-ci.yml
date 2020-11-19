@@ -13,7 +13,6 @@ variables:
 stages:
   - build
   # - test
-  - deploy-database
   - deploy
 
 before_script:
@@ -34,9 +33,10 @@ build auto24:
     - mvn $MAVEN_CLI_OPTS compile
 
 deploy database:
-  stage: deploy-database
+  stage: build
   only:
-    - database
+    refs:
+      - database
   tags:
     - auto24
   script:
