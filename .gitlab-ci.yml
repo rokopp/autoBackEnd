@@ -25,14 +25,14 @@ build auto24:
   script:
     - mvn $MAVEN_CLI_OPTS compile
 
-test heroes:
+test auto24:
   stage: test
   tags:
     - auto24
   script:
     - mvn $MAVEN_CLI_OPTS test
 
-deploy heroes:
+deploy auto24:
   stage: deploy
   only:
     refs:
