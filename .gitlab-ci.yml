@@ -1,6 +1,7 @@
 image: docker:latest
 
-
+services:
+  - docker:dind
 
 cache:
   paths:
@@ -12,6 +13,7 @@ variables:
 stages:
   - build
   # - test
+  - deploy-database
   - deploy
 
 before_script:
@@ -25,38 +27,30 @@ build auto24:
       - .mvn/caches
   artifacts:
     paths:
-      - target
+      - build/libs
   tags:
     - auto24
   script:
     - mvn $MAVEN_CLI_OPTS compile
 
 deploy database:
-  services:
-    - docker:dind
-  stage: deploy
-  tags:
-    - auto24
-  script:
-    - "curl -X POST -F token=BFJmTvqivXHS4UzsqCB2 -F ref=database https://gitlab.cs.ttu.ee/api/v4/projects/14834/trigger/pipeline"
-    - docker-compose -f docker/docker-compose.yml up
+  stage: deploy-database
   only:
-    refs:
-      - database
+    - database
+  script:
+    - docker-compose -f docker/docker-compose.yml up
 
 deploy auto24:
   stage: deploy
   only:
     refs:
       - master
-      - database
   tags:
     - auto24
   script:
-    - mvn package
     - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
     - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
-    - cp -r target/. ~/api-deployment # cp - copy build/libs is where
+    - cp -r targer/. ~/api-deployment # cp - copy build/libs is where
     - service auto24 restart  # this requires sudo rights for gitlab user
 #    - mvn $MAVEN_CLI_OPTS deploy
 
