@@ -1,4 +1,10 @@
-image: maven:latest
+image: docker:latest
+services:
+  - docker:dind
+
+cache:
+  paths:
+    - .m2/repository
 
 variables:
   MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
@@ -34,7 +40,9 @@ deploy auto24:
   tags:
     - auto24
   script:
-    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
-    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
-    - cp -r build/libs/. ~/api-deployment # cp - copy build/libs is where
-    - sudo service auto24 restart  # this requires sudo rights for gitlab user
+#    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
+#    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
+#    - cp -r build/libs/. ~/api-deployment # cp - copy build/libs is where
+#    - sudo service auto24 restart  # this requires sudo rights for gitlab user
+    - mvn $MAVEN_CLI_OPTS deploy
+
