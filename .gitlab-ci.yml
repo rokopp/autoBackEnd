@@ -25,12 +25,6 @@ build auto24:
   script:
     - mvn $MAVEN_CLI_OPTS compile
 
-test auto24:
-  stage: test
-  tags:
-    - auto24
-  script:
-    - mvn $MAVEN_CLI_OPTS test
 
 deploy auto24:
   stage: deploy
