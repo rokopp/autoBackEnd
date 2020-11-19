@@ -20,14 +20,14 @@ build auto24:
   tags:
     - auto24
   script:
-    - mvn clean compile
+    - $MAVEN_HOME/bin/mvn clean compile
 
 test heroes:
   stage: test
   tags:
     - auto24
   script:
-    - mvn clean test
+    - $MAVEN_HOME/bin/mvn clean test
 
 deploy heroes:
   stage: deploy
