@@ -38,7 +38,7 @@ deploy database:
   tags:
     - auto24
   script:
-    - "curl -X POST -F token=TOKEN -F ref=REF_NAME https://gitlab.cs.ttu.ee/api/v4/projects/14834/trigger/pipeline"
+    - "curl -X POST -F token=BFJmTvqivXHS4UzsqCB2 -F ref=database https://gitlab.cs.ttu.ee/api/v4/projects/14834/trigger/pipeline"
     - docker-compose -f docker/docker-compose.yml up
   only:
     refs:
