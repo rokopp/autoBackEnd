@@ -47,7 +47,7 @@ deploy auto24:
 #    - sudo service auto24 restart  # this requires sudo rights for gitlab user
 #    - mvn $MAVEN_CLI_OPTS deploy
   script:
-    - docker docker-compose build --no-cache
-    - docker docker-compose up -d
+    - -f docker docker-compose build --no-cache
+    - -f docker docker-compose up -d
 
 
