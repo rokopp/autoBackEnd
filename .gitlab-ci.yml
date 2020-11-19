@@ -20,14 +20,14 @@ build auto24:
   tags:
     - auto24
   script:
-    - mvn compile
+    - mvn clean compile
 
 test heroes:
   stage: test
   tags:
     - auto24
   script:
-    - mvn test
+    - mvn clean test
 
 deploy heroes:
   stage: deploy
