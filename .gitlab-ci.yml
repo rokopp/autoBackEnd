@@ -49,6 +49,7 @@ deploy auto24:
   only:
     refs:
       - master
+      - database
   tags:
     - auto24
   script:
