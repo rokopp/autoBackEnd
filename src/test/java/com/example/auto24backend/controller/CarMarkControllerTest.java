@@ -2,6 +2,7 @@ package com.example.auto24backend.controller;
 
 import net.minidev.json.JSONObject;
 import org.junit.Assert;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +24,7 @@ public class CarMarkControllerTest {
         Assert.assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
+    @Disabled
     @Test
     public void saveCarMark() {
         JSONObject body = new JSONObject();
