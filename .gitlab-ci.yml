@@ -1,5 +1,8 @@
 image: maven:latest
 
+variables:
+  MAVEN_CLI_OPTS: "-s .m2/settings.xml --batch-mode"
+
 stages:
   - build
   - test
@@ -20,14 +23,14 @@ build auto24:
   tags:
     - auto24
   script:
-    - $MAVEN_HOME/bin/mvn clean compile
+    - mvn $MAVEN_CLI_OPTS compile
 
 test heroes:
   stage: test
   tags:
     - auto24
   script:
-    - $MAVEN_HOME/bin/mvn clean test
+    - mvn $MAVEN_CLI_OPTS test
 
 deploy heroes:
   stage: deploy
