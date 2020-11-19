@@ -36,7 +36,7 @@ deploy database:
   stage: build
   only:
     refs:
-      - database
+      - master
   tags:
     - auto24
   script:
