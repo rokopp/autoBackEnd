@@ -48,7 +48,7 @@ deploy auto24:
 #    - mvn $MAVEN_CLI_OPTS deploy
   script:
 
-    - docker-compose -f docker/docker-compose.yml build --build-arg UID=$(id -u)
+    - sudo docker-compose -f docker/docker-compose.yml build --build-arg UID=$(id -u)
 #    - cd ./docker; docker-compose build --no-cache
 
 
