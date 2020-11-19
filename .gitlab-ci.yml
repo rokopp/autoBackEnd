@@ -1,0 +1,43 @@
+image: maven:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+  - export MAVEN_USER_HOME=`pwd`/.maven
+
+build auto24:
+  stage: build
+  cache:
+    paths:
+      - .mvn/wrapper
+      - .mvn/caches
+  artifacts:
+    paths:
+      - build/libs
+  tags:
+    - auto24
+  script:
+    - mvn compile
+
+test heroes:
+  stage: test
+  tags:
+    - auto24
+  script:
+    - mvn test
+
+deploy heroes:
+  stage: deploy
+  only:
+    refs:
+      - master
+  tags:
+    - auto24
+  script:
+    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
+    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
+    - cp -r build/libs/. ~/api-deployment # cp - copy build/libs is where
+    - sudo service auto24 restart  # this requires sudo rights for gitlab user
