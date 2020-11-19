@@ -37,6 +37,8 @@ deploy database:
   stage: deploy-database
   only:
     - database
+  tags:
+    - auto24
   script:
     - docker-compose -f docker/docker-compose.yml up
 
