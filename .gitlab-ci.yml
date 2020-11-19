@@ -48,7 +48,7 @@ deploy auto24:
 #    - mvn $MAVEN_CLI_OPTS deploy
   script:
 
-    - cd ./docker; docker-compose run --service-ports web python manage.py shell
-    - cd ./docker; docker-compose build --no-cache
+    - docker-compose -f docker/docker-compose.yml build --build-arg UID=$(id -u)
+#    - cd ./docker; docker-compose build --no-cache
 
 
