@@ -33,7 +33,7 @@ build auto24:
     - mvn $MAVEN_CLI_OPTS compile
 
 deploy database:
-  stage: build
+  stage: deploy
   only:
     refs:
       - master
@@ -46,7 +46,7 @@ deploy auto24:
   stage: deploy
   only:
     refs:
-      - master
+      - database
   tags:
     - auto24
   script:
