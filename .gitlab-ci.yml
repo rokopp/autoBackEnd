@@ -47,10 +47,6 @@ deploy auto24:
 #    - sudo service auto24 restart  # this requires sudo rights for gitlab user
 #    - mvn $MAVEN_CLI_OPTS deploy
   script:
-    - sudo apt-get install -y python3-pip
-    - sudo pip3 install --upgrade setuptools
-    - sudo pip3 install docker-compose
-    - sudo docker image prune -f
     - docker-compose build --no-cache
     - docker-compose up -d
 
