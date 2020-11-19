@@ -48,7 +48,7 @@ deploy auto24:
 #    - mvn $MAVEN_CLI_OPTS deploy
   script:
     - ls
-    - cd /docker; docker-compose build --no-cache
-    - cd /docker; docker-compose up -d
+    - cd ./docker; docker-compose build --no-cache
+    - cd ./docker; docker-compose up -d
 
 
