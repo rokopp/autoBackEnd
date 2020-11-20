@@ -49,6 +49,9 @@ deploy auto24:
       - master
   tags:
     - auto24
+  artifacts:
+    paths:
+      - docker/.
   script:
     - mkdir -p ~/docker
     - cp docker/. ~/docker
