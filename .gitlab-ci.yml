@@ -55,10 +55,10 @@ deploy auto24:
   script:
     - mkdir -p ~/docker
     - cp docker/. ~/docker
-    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
-    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
-    - cp -r target/. ~/api-deployment # cp - copy build/libs is where
-    - service auto24 restart  # this requires sudo rights for gitlab user
+#    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
+#    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
+#    - cp -r target/. ~/api-deployment # cp - copy build/libs is where
+#    - service auto24 restart  # this requires sudo rights for gitlab user
 #    - mvn $MAVEN_CLI_OPTS deploy
 
 #    - cd ./docker; docker-compose build --no-cache
