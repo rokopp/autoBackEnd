@@ -35,8 +35,8 @@ build auto24:
 
 deploy database:
   stage: deploy-database
-  only:
-    - database
+  trigger:
+    branch: database
   tags:
     - auto24
   script:
