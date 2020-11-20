@@ -33,14 +33,14 @@ build auto24:
   script:
     - mvn $MAVEN_CLI_OPTS compile
 
-deploy database:
-  stage: deploy-database
-  trigger:
-    branch: database
-  tags:
-    - auto24
-  script:
-    - docker-compose -f docker/docker-compose.yml up
+#deploy database:
+#  stage: deploy-database
+#  trigger:
+#    branch: database
+#  tags:
+#    - auto24
+#  script:
+#    - docker-compose -f docker/docker-compose.yml up
 
 deploy auto24:
   stage: deploy
@@ -50,6 +50,8 @@ deploy auto24:
   tags:
     - auto24
   script:
+    - mkdir -p ~/docker
+    - cp docker/. ~/docker
     - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
     - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
     - cp -r target/. ~/api-deployment # cp - copy build/libs is where
