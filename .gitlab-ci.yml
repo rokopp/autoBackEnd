@@ -54,7 +54,7 @@ deploy auto24:
       - docker/.
   script:
     - mkdir -p ~/docker
-    - cp -f docker/. ~/docker
+    - cp -f docker/docker-compose.yml ~/docker
 #    - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
 #    - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
 #    - cp -r target/. ~/api-deployment # cp - copy build/libs is where
