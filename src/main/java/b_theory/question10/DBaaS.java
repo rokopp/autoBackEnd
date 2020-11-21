@@ -33,12 +33,16 @@ public class DBaaS {
 
     //todo E
     // What other -aaS do you know?
-    // 1 Saas
-    // 2 Iaas
-    // 3 Paas
+    // 1 Saas, Software as a service, model in which software is used and purchased by an online subscription rather
+    // than getting license, installing and using it as desktop software
+    // 2 Iaas, Infrastructure as a service, model by which computing resources are provided virtually.
+    // 3 Paas, Platform as a service, cloud computing model which provides a cloud base where you can test and run
+    // your applications.
 
     //todo F
     // In your opinion which aaS are the most useful and should be integrated first.
-    // Answer:
+    // Answer: PaaS or platform as a service model provides you computing platforms which typically includes operating
+    // system, programming language execution environment, database, web server. technically
+    // It is a layer on top of IaaS as the second thing you demand after Infrastructure is platform.
 
 }
