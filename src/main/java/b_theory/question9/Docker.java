@@ -13,7 +13,6 @@ public class Docker {
     // What is the difference between build server and production server?
     // Answer: A production server is configured to restrict access to authorized users and to limit control to
     // system administrators.
-    //
 
     //todo C
     // What is docker?
@@ -33,11 +32,12 @@ public class Docker {
 
     //todo F
     // Name and describe tools for docker architecture
-    // 1
-    // 2
+    // 1 Docker Compose is a tool that lets you start multiple Docker containers together and configure how they interact.
+    // 2 Dockerfile, docker build command builds a image from DockerFile and a context. he build’s context is the set
+    // of files at a specified location PATH or URL. The PATH is a directory on your local filesystem.
 
     //todo G
     // Name and explain why are companies slow in moving existing systems to docker architecture (do not explain why docker is bad)
-    // 1
-    // 2
+    // 1 long process to migrate to docker from virtual machines, time is money
+    // 2 docker might be to new for the it landscape for older companies
 }
