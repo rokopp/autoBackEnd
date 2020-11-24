@@ -70,6 +70,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/b_theory/*</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
