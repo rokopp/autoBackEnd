@@ -9,7 +9,7 @@ public class Nr4isI {
 }
 
 //todo SportsCars interface is an interface with some actions of an sports car.
-public interface SportsCars {
+interface SportsCars {
 
     void race();
 
@@ -23,7 +23,7 @@ public interface SportsCars {
 
 //todo Ott Tänak is a rally driver.
 // By implementing the SportsCars interface we have to implement methods like dragRacing and formula which OttT2nak will never use.
-public class OttT2nak implements SportsCars {
+class OttT2nak implements SportsCars {
 
     @Override
     public void race() {
@@ -45,14 +45,14 @@ public class OttT2nak implements SportsCars {
 }
 
 //todo same problems occur like for OttT2nak, where some methods aren't used
-public interface DriftCar extends SportsCars {
+interface DriftCar extends SportsCars {
 
     void drifting();
 
 }
 
 //todo same problems occur like for OttT2nak, where some methods aren't used
-public interface KimiRaikonen extends SportsCars {
+interface KimiRaikonen extends SportsCars {
 
     void dragRacing();
 
@@ -61,7 +61,7 @@ public interface KimiRaikonen extends SportsCars {
 }
 
 //todo Therefore Ott Tänak will not have to implement actions that he is not capable of performing.
-public class OttT2nak implements DriftCar {
+abstract class OttT2nak2 implements DriftCar {
 
     @Override
     public void race() {
