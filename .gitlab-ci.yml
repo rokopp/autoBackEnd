@@ -18,6 +18,12 @@ stages:
 
 before_script:
   - export MAVEN_USER_HOME=`pwd`/.maven
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
 
 build auto24:
   stage: build
