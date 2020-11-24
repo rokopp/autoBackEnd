@@ -18,8 +18,6 @@ stages:
 
 before_script:
   - export MAVEN_USER_HOME=`pwd`/.maven
-  - apt-get update -qq
-  - apt-get install -qq git
   - 'which ssh-agent || ( apt-get install -qq openssh-client )'
   - eval $(ssh-agent -s)
   - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d)
