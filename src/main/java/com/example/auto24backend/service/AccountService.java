@@ -25,7 +25,7 @@ public class AccountService {
         } else if (register.get("userName") == null){
             return "Wrong username";
         } else if (register.get("phoneNumber") == null){
-            return "Wrong phone number";
+            return "Wrong phonenumber";
         }
         Account account = Account.builder()
                 .email(register.get("email"))
