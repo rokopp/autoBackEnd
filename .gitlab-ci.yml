@@ -18,8 +18,6 @@ stages:
 
 before_script:
   - export MAVEN_USER_HOME=`pwd`/.maven
-  - apt-get update -qq
-  - apt-get install -qq git
   - 'which ssh-agent || ( apt-get install -qq openssh-client )'
   - eval $(ssh-agent -s)
   - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 -d)
@@ -62,7 +60,8 @@ deploy auto24:
     - mkdir -p ~/api-deployment # mkdir make folder api-deployment ~/ is under current user directory so for gitlab it would be /home/gitlab/api-deployment
     - rm -rf ~/api-deployment/* # rm remove -rf is recursive files from api-deployment
     - cp -r target/. ~/api-deployment # cp - copy build/libs is where
-    - service auto24 restart  # this requires sudo rights for gitlab user
+    - who
+  #  - service auto24 restart  # this requires sudo rights for gitlab user
   #  - mvn $MAVEN_CLI_OPTS deploy
 
 #    - cd ./docker; docker-compose build --no-cache
