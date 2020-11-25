@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin
 @RequestMapping({"api/ads2"})
 @RestController
 public class AdvertisementController {
