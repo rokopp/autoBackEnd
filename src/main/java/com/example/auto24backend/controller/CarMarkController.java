@@ -20,8 +20,9 @@ public class CarMarkController {
         return carMarkService.findAll();
     }
 
-    @PostMapping
+    @PostMapping("/save")
     public CarMark saveCarMark(@RequestBody CarMark carMark) {
         return carMarkService.save(carMark);
     }
+
 }

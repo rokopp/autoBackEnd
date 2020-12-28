@@ -3,13 +3,14 @@ package com.example.auto24backend.service;
 
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
+import com.example.auto24backend.database.Role;
 import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.repository.AccountRepository;
+import com.example.auto24backend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AccountService {
@@ -17,51 +18,35 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    public String saveAccount(Map<String, String> register) {
-        if(register.get("email") == null) {
-            return "Wrong email";
-        } else if (register.get("password") == null){
-            return "Wrong password";
-        } else if (register.get("userName") == null){
-            return "Wrong username";
-        } else if (register.get("phoneNumber") == null){
-            return "Wrong phonenumber";
-        }
-        Account account = Account.builder()
-                .email(register.get("email"))
-                .phoneNumber(register.get("phoneNumber"))
-                .password(register.get("password"))
-                .userName(register.get("userName"))
-                .build();
-        try {
-            accountRepository.save(account);
-        } catch (Exception e) {
-            return "An account already exists with this name and/or e-mail. Please try again.";
-        }
-        return "success";
-    }
-    
-    public String login(Map<String, String> body) {
-        String userName = body.get("userName");
-        String password = body.get("password");
-        List<Account> accountList = accountRepository.findByUserNameAndPassword(userName, password);
-        if (accountList.size() == 1) {
-            return "success";
-        } else {
-            return "No account found";
-        }
+    @Autowired
+    private RoleRepository roleRepository;
+
+    public Account findUserByEmail(String email) {
+        return accountRepository.findByEmail(email);
     }
 
-    public List<Account> findByName(String userName) {
+    public Account findUserByUserName(String userName) {
         return accountRepository.findByUserName(userName);
     }
 
-    public AccountDto convertAccount(Advertisement advertisement) {
-        return AccountDto.builder()
-                .id(advertisement.getAccount().getId())
-                .email(advertisement.getAccount().getEmail())
-                .phoneNumber(advertisement.getAccount().getPhoneNumber())
-                .build();
+    public AccountDto saveUser(Account account) {
+        Role userRole = roleRepository.findByRole("ROLE_USER");
+        account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
+        return convert(accountRepository.save(account));
     }
 
+    public AccountDto saveAdmin(Account account) {
+        Role userRole = roleRepository.findByRole("ROLE_USER");
+        Role adminRole = roleRepository.findByRole("ROLE_ADMIN");
+        account.setRoleSet(new HashSet<Role>(Arrays.asList(userRole, adminRole)));
+        return convert(accountRepository.save(account));
+    }
+
+    public AccountDto convert(Account account) {
+        return AccountDto.builder()
+                .id(account.getId())
+                .phoneNumber(account.getPhoneNumber())
+                .email(account.getEmail())
+                .build();
+    }
 }

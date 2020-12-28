@@ -2,9 +2,14 @@ package com.example.auto24backend.database;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter @Setter @NoArgsConstructor @Builder
@@ -28,4 +33,12 @@ public class Account {
     @OneToMany(mappedBy = "account", cascade = {CascadeType.ALL})
     @JsonIgnore
     private List<Advertisement> advertisements;
+
+    @ManyToMany
+    @JoinTable(
+            name = "account_role",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "id"))
+    Set<Role> roleSet;
+
 }

@@ -31,13 +31,8 @@ public class AdvertisementService {
     }
 
     public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
-        List<Account> accounts = accountService.findByName(userName);
-        if (!(accounts.size() == 1)) {
-            return "Wrong account.";
-        } else if (advertisement.getId() != null) {
-            return "Wrong id.";
-        }
-        advertisement.setAccount(accounts.get(0));
+        Account account = accountService.findUserByUserName(userName);
+        advertisement.setAccount(account);
         Advertisement obj = advertisementRepository.save(advertisement);
         advertisementRepository.flush();
         if (multipartFile != null) {
@@ -75,7 +70,7 @@ public class AdvertisementService {
                 .serialNr(advertisement.getCarSerialNr())
                 .price(advertisement.getPrice())
                 .pictureList(pictureService.getPictures(advertisement))
-                .account(accountService.convertAccount(advertisement))
+                .account(accountService.convert(advertisement.getAccount()))
                 .build();
     }
 }
