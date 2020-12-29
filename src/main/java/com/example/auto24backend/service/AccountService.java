@@ -8,6 +8,7 @@ import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.repository.AccountRepository;
 import com.example.auto24backend.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,23 +22,24 @@ public class AccountService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public Account findUserByEmail(String email) {
-        return accountRepository.findByEmail(email);
-    }
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Account findUserByUserName(String userName) {
         return accountRepository.findByUserName(userName);
     }
 
-    public AccountDto saveUser(Account account) {
-        Role userRole = roleRepository.findByRole("ROLE_USER");
+    public AccountDto saveAccount(Account account) {
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+        Role userRole = roleRepository.findByName("USER");
         account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
         return convert(accountRepository.save(account));
     }
 
     public AccountDto saveAdmin(Account account) {
-        Role userRole = roleRepository.findByRole("ROLE_USER");
-        Role adminRole = roleRepository.findByRole("ROLE_ADMIN");
+        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+        Role userRole = roleRepository.findByName("USER");
+        Role adminRole = roleRepository.findByName("ADMIN");
         account.setRoleSet(new HashSet<Role>(Arrays.asList(userRole, adminRole)));
         return convert(accountRepository.save(account));
     }

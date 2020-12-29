@@ -11,21 +11,25 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
-public class MyUserDetailService implements UserDetailsService {
+public class MyAccountDetailService implements UserDetailsService {
 
     @Autowired
     private AccountRepository accountRepository;
 
-
+    @Transactional
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
         Account account = accountRepository.findByUserName(userName);
+        if(account == null) {
+            throw new UsernameNotFoundException("User name not found");
+        }
         List<GrantedAuthority> authorities = getUserAuthority(account.getRoleSet());
         return buildUserForAuthentication(account, authorities);
 
@@ -36,8 +40,7 @@ public class MyUserDetailService implements UserDetailsService {
         for (Role role : userRoles) {
             roles.add(new SimpleGrantedAuthority(role.getName()));
         }
-        List<GrantedAuthority> grantedAuthorities = new ArrayList<>(roles);
-        return grantedAuthorities;
+        return new ArrayList<>(roles);
     }
 
     private UserDetails buildUserForAuthentication(Account account, List<GrantedAuthority> authorities) {

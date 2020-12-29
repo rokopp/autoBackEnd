@@ -34,11 +34,11 @@ public class Account {
     @JsonIgnore
     private List<Advertisement> advertisements;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "account_role",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "id"))
+            joinColumns = { @JoinColumn(name = "account_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") } )
     Set<Role> roleSet;
 
 }
