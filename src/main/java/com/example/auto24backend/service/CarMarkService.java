@@ -22,6 +22,8 @@ public class CarMarkService {
     public CarMark save(CarMark carMark) {
         if (carMark.getId() != null) {
             throw new InvalidCarMarkException("Wrong id.");
+        } else if (carMark.getCarMark() == null) {
+            throw new InvalidCarMarkException("Wrong car mark");
         }
         return carMarkRepository.save(carMark);
     }
