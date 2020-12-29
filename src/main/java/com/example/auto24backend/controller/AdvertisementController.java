@@ -24,10 +24,21 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public String saveAdvertisement(@RequestParam(value = "userName") String userName,
-                                    @RequestParam(value = "file", required = false) MultipartFile file,
-                                    @RequestParam(value =  "ad") Advertisement advertisement) {
+    public String saveAdvertisement(String userName,
+                                    MultipartFile file,
+                                    Advertisement advertisement) {
+        System.out.println(advertisement.toString());
         return advertisementService.save(advertisement, userName, file);
+    }
+
+    @RequestMapping("test")
+    public List<Object> getWithoutRequestParam(Advertisement advertisement,
+                                               String userName,
+                                               MultipartFile file) {
+        System.out.println(advertisement.toString());
+        System.out.println(userName);
+        System.out.println(file);
+        return null;
     }
 
     @GetMapping("/search")
