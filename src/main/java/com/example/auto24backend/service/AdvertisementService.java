@@ -32,6 +32,9 @@ public class AdvertisementService {
 
     public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
         Account account = accountService.findUserByUserName(userName);
+        if (account == null) {
+            throw new InvalidAdvertisementException("Wrong acc");
+        }
         advertisement.setAccount(account);
         Advertisement obj = advertisementRepository.save(advertisement);
         advertisementRepository.flush();

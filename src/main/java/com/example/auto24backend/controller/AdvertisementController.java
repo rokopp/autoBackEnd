@@ -1,13 +1,16 @@
 package com.example.auto24backend.controller;
 
+import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin
@@ -24,10 +27,10 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public String saveAdvertisement(@RequestParam(value = "userName") String userName,
-                                    @RequestParam(value = "file", required = false) MultipartFile file,
-                                    @RequestParam(value =  "ad") Advertisement advertisement) {
-        return advertisementService.save(advertisement, userName, file);
+    public String saveAdvertisement(Principal principal,
+                                    MultipartFile file,
+                                    Advertisement advertisement) {
+        return advertisementService.save(advertisement, principal.getName(), file);
     }
 
     @GetMapping("/search")

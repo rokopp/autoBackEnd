@@ -13,8 +13,7 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-
-
+    
     @GetMapping("/login")
     public String login() {
         return "login";
