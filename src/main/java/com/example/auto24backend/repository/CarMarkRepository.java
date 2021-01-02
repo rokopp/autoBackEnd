@@ -8,4 +8,6 @@ import java.util.List;
 
 @Repository
 public interface CarMarkRepository extends JpaRepository<CarMark, Long> {
+
+    CarMark findByCarMark(String carMark);
 }

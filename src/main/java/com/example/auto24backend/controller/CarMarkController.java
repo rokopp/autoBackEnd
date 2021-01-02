@@ -24,4 +24,5 @@ public class CarMarkController {
     public CarMark saveCarMark(@RequestBody CarMark carMark) {
         return carMarkService.save(carMark);
     }
+
 }

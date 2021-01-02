@@ -4,14 +4,18 @@ import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.service.AdvertisementService;
+import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RequestMapping({"api/ads", "api/ads2", "api/ads3"})
+@RequestMapping({"api/ads"})
 @RestController
 public class AdvertisementController {
 
@@ -24,10 +28,10 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public String saveAdvertisement(@RequestParam(value = "userName") String userName,
-                                    @RequestParam(value = "file", required = false) MultipartFile file,
-                                    @RequestParam(value =  "ad") Advertisement advertisement) {
-        return advertisementService.save(advertisement, userName, file);
+    public String saveAdvertisement(@RequestPart("ad") Advertisement advertisement,
+                                    @RequestPart("picture") MultipartFile file,
+                                    @RequestPart("username") String username) {
+        return advertisementService.save(advertisement, username, file);
     }
 
     @GetMapping("/search")

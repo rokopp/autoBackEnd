@@ -6,9 +6,10 @@ CREATE TABLE IF NOT EXISTS car_mark (
 CREATE TABLE IF NOT EXISTS account (
   id              SERIAL PRIMARY KEY,
   user_name       VARCHAR(20) UNIQUE NOT NULL,
-  password		  VARCHAR(20) NOT NULL,
+  password		  VARCHAR(255) NOT NULL,
   email			  VARCHAR(30) UNIQUE NOT NULL,
-  phone_number    VARCHAR(10) NOT NULL		
+  phone_number    VARCHAR(10) NOT NULL
+
 );
 
 CREATE TABLE IF NOT EXISTS advertisement (
@@ -32,3 +33,28 @@ CREATE TABLE IF NOT EXISTS picture (
 	FOREIGN KEY (advertisement_id)
 		REFERENCES advertisement (id)
 );
+
+CREATE TABLE IF NOT EXISTS role (
+    id 					SERIAL	PRIMARY KEY,
+	name			    VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS account_role(
+    account_id  INT NOT NULL,
+    role_id     INT NOT NULL,
+    PRIMARY KEY (account_id, role_id),
+    FOREIGN KEY (account_id)
+		REFERENCES account (id),
+	FOREIGN KEY (role_id)
+		REFERENCES role (id)
+);
+
+INSERT INTO role (name, id) values ('ADMIN', 1);
+INSERT INTO role (name, id) values ('USER', 2);
+
+INSERT INTO account(id, user_name, password, email, phone_number) VALUES
+(1, 'aaa', '$2a$10$tq..FDKdH4nVCPQVX9Y0tuBd08IparVCBQgRo12khuclEjPegTpCG', 'wtf', '6656565');
+
+INSERT INTO account_role(account_id, role_id) VALUES (1, 2);
+INSERT INTO account_role(account_id, role_id) VALUES (1, 1);
+

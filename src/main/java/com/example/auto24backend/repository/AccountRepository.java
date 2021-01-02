@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface AccountRepository extends PagingAndSortingRepository<Account, Long> {
 
-    List<Account> findByUserNameAndPassword(String userName, String password);
-    List<Account> findByUserName(String userName);
+    Account findByUserName(String userName);
+    Account findByEmail(String email);
 }

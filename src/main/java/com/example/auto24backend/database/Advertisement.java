@@ -41,4 +41,17 @@ public class Advertisement {
         this.carMark = carMark;
         this.account = account;
     }
+
+    @Override
+    public String toString() {
+        return "Advertisement{" +
+                "id=" + id +
+                ", carSerialNr='" + carSerialNr + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", carMark=" + carMark +
+                ", account=" + account +
+                ", pictures=" + pictures +
+                '}';
+    }
 }

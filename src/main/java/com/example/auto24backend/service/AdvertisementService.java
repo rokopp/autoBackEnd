@@ -3,6 +3,7 @@ package com.example.auto24backend.service;
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
+import com.example.auto24backend.database.Picture;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.exceptions.InvalidAdvertisementException;
 import com.example.auto24backend.repository.AdvertisementRepository;
@@ -30,18 +31,17 @@ public class AdvertisementService {
         return getAdvertisementDtos(advertisements);
     }
 
-    public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
-        List<Account> accounts = accountService.findByName(userName);
-        if (!(accounts.size() == 1)) {
-            return "Wrong account.";
-        } else if (advertisement.getId() != null) {
-            return "Wrong id.";
+    public String save(Advertisement advertisement, String userName, MultipartFile file) {
+        Account account = accountService.findUserByUserName(userName);
+        System.out.println("account shit " + account);
+        if (account == null) {
+            throw new InvalidAdvertisementException("Wrong acc");
         }
-        advertisement.setAccount(accounts.get(0));
-        Advertisement obj = advertisementRepository.save(advertisement);
-        advertisementRepository.flush();
-        if (multipartFile != null) {
-            pictureService.savePicture(multipartFile, obj);
+        advertisement.setAccount(account);
+        Advertisement ad = advertisementRepository.saveAndFlush(advertisement);
+
+        if (file != null) {
+            pictureService.savePicture(file, ad);
         }
         return "Advertisement successfully saved";
     }
@@ -75,7 +75,7 @@ public class AdvertisementService {
                 .serialNr(advertisement.getCarSerialNr())
                 .price(advertisement.getPrice())
                 .pictureList(pictureService.getPictures(advertisement))
-                .account(accountService.convertAccount(advertisement))
+                .account(accountService.convert(advertisement.getAccount()))
                 .build();
     }
 }

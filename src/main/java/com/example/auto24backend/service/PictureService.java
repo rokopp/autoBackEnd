@@ -11,7 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.spi.FileTypeDetector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,21 +47,41 @@ public class PictureService {
     }
 
     public void savePicture(MultipartFile multipartFile, Advertisement advertisement) {
-        if (!multipartFile.getOriginalFilename().endsWith(".jpg")) {
-            return;
-        } else if(!multipartFile.getOriginalFilename().endsWith(".png")) {
+        Path picturesPath = null;
+        try {
+
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toRealPath().toString() + "/src/main/pictures";
+            picturesPath = Paths.get(s);
+
+            File directory = new File(picturesPath.toString());
+            if (!directory.exists()) {
+                Files.createDirectories(picturesPath);
+            }
+
+
+        } catch (IOException e) {
+
+            System.err.println("Failed to create directory!" + e.getMessage());
+
+        }
+
+        String fileType = multipartFile.getContentType();
+        if (!fileType.endsWith("jpg") && !fileType.endsWith("png")) {
             return;
         }
+        String fileName = advertisement.getId() + "_" + multipartFile.getOriginalFilename();
         try {
-            File file = new File("/pictures/" + multipartFile.getOriginalFilename());
+            assert picturesPath != null;
+            File file = new File(picturesPath.toString() + "/" + fileName);
             multipartFile.transferTo(file);
         } catch (IOException e) {
             e.printStackTrace();
             return;
         }
         Picture picture = Picture.builder()
-                .filePath("/pictures/")
-                .fileName(multipartFile.getOriginalFilename())
+                .filePath(picturesPath.toString() + "/")
+                .fileName(fileName)
                 .advertisement(advertisement)
                 .build();
         pictureRepository.save(picture);
