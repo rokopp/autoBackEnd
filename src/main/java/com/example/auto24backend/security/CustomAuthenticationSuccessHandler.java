@@ -22,7 +22,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         if (roles.contains("ADMIN")) {
             httpServletResponse.sendRedirect("http://localhost:3000/admin");
         } else {
-            httpServletResponse.sendRedirect("http://localhost:3000/");
+            httpServletResponse.sendRedirect("http://localhost:3000/user");
         }
     }
 }
