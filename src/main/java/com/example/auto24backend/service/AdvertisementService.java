@@ -30,17 +30,18 @@ public class AdvertisementService {
         return getAdvertisementDtos(advertisements);
     }
 
-    public String save(Advertisement advertisement, String userName, MultipartFile multipartFile) {
+    public String save(Advertisement advertisement, String userName) {
         Account account = accountService.findUserByUserName(userName);
+        System.out.println("account shit " + account);
         if (account == null) {
             throw new InvalidAdvertisementException("Wrong acc");
         }
         advertisement.setAccount(account);
-        Advertisement obj = advertisementRepository.save(advertisement);
-        advertisementRepository.flush();
-        if (multipartFile != null) {
-            pictureService.savePicture(multipartFile, obj);
-        }
+        advertisementRepository.save(advertisement);
+//        advertisementRepository.flush();
+//        if (multipartFile != null) {
+//            pictureService.savePicture(multipartFile, obj);
+//        }
         return "Advertisement successfully saved";
     }
 

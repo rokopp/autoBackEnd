@@ -11,11 +11,15 @@ import com.example.auto24backend.service.MyAccountDetailService;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Autowired
     private MyAccountDetailService userDetailsService;
@@ -37,11 +41,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/ads/search").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/carMarks").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/carMarks").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/ads").hasAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/api/ads").permitAll()
                 .antMatchers(HttpMethod.POST, "/registerAdmin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
+                .loginProcessingUrl("/perform_login")
+                .successHandler(authenticationSuccessHandler)
+                .failureUrl("http://localhost:3000/login?error=true")
                 .and()
                 .logout().permitAll()
                 .and()
