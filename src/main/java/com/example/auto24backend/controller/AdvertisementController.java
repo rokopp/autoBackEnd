@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RequestMapping({"api/ads"})
+@RequestMapping({"api/ads", "api/ads2"})
 @RestController
 public class AdvertisementController {
 

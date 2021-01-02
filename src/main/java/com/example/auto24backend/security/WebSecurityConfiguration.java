@@ -48,7 +48,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().permitAll()
-                .loginProcessingUrl("http://13.53.200.72/perform_login")
+                .loginProcessingUrl("/perform_login")
                 .successHandler(authenticationSuccessHandler)
                 .failureUrl("http://13.53.200.72/login?error=true")
                 .and()
