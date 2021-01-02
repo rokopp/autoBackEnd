@@ -27,12 +27,14 @@ public class AdvertisementController {
     }
 
     @PostMapping
-    public String saveAdvertisement(Principal principal,
-//                                    MultipartFile file,
-                                    Advertisement advertisement) {
-
-//        System.out.println(principal.getName() + " " + advertisement.toString());
-        return advertisementService.save(advertisement, "aaa");
+    public String saveAdvertisement(@RequestPart("ad") Advertisement advertisement,
+                                    @RequestPart("picture") MultipartFile file,
+                                    Principal principal) {
+        System.out.println(advertisement.getCarSerialNr());
+        System.out.println(advertisement.getDescription());
+        System.out.println(file.getOriginalFilename());
+        return "ye";
+        //return advertisementService.save(advertisement, "aaa");
     }
 
     @GetMapping("/search")
