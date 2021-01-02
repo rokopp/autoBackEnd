@@ -38,17 +38,11 @@ public class AdvertisementService {
             throw new InvalidAdvertisementException("Wrong acc");
         }
         advertisement.setAccount(account);
-        Picture picture = Picture.builder()
-                .filePath("awe").build();
-        List<Picture> pictures = new ArrayList<>();
-        pictures.add(picture);
-        advertisement.setPictures(pictures);
-        Advertisement a = advertisementRepository.save(advertisement);
+        Advertisement ad = advertisementRepository.saveAndFlush(advertisement);
 
-//        advertisementRepository.flush();
-//        if (multipartFile != null) {
-//            pictureService.savePicture(multipartFile, obj);
-//        }
+        if (file != null) {
+            pictureService.savePicture(file, ad);
+        }
         return "Advertisement successfully saved";
     }
 

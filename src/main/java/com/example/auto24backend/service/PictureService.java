@@ -59,7 +59,7 @@ public class PictureService {
         }
         Picture picture = Picture.builder()
                 .filePath("/pictures/")
-                .fileName(multipartFile.getOriginalFilename())
+                .fileName(multipartFile.getOriginalFilename() + advertisement.getId())
                 .advertisement(advertisement)
                 .build();
         pictureRepository.save(picture);
