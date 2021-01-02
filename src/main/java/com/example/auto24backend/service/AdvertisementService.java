@@ -30,14 +30,15 @@ public class AdvertisementService {
         return getAdvertisementDtos(advertisements);
     }
 
-    public String save(Advertisement advertisement, String userName) {
+    public String save(Advertisement advertisement, String userName, MultipartFile file) {
         Account account = accountService.findUserByUserName(userName);
         System.out.println("account shit " + account);
         if (account == null) {
             throw new InvalidAdvertisementException("Wrong acc");
         }
         advertisement.setAccount(account);
-        advertisementRepository.save(advertisement);
+        Advertisement a = advertisementRepository.save(advertisement);
+        System.out.println(a.getId());
 //        advertisementRepository.flush();
 //        if (multipartFile != null) {
 //            pictureService.savePicture(multipartFile, obj);
