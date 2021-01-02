@@ -3,6 +3,7 @@ package com.example.auto24backend.service;
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
+import com.example.auto24backend.database.Picture;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.exceptions.InvalidAdvertisementException;
 import com.example.auto24backend.repository.AdvertisementRepository;
@@ -37,8 +38,13 @@ public class AdvertisementService {
             throw new InvalidAdvertisementException("Wrong acc");
         }
         advertisement.setAccount(account);
+        Picture picture = Picture.builder()
+                .filePath("awe").build();
+        List<Picture> pictures = new ArrayList<>();
+        pictures.add(picture);
+        advertisement.setPictures(pictures);
         Advertisement a = advertisementRepository.save(advertisement);
-        System.out.println(a.getId());
+
 //        advertisementRepository.flush();
 //        if (multipartFile != null) {
 //            pictureService.savePicture(multipartFile, obj);
