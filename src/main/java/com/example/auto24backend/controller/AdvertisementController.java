@@ -28,7 +28,7 @@ public class AdvertisementController {
     public String saveAdvertisement(@RequestPart("ad") Advertisement advertisement,
                                     @RequestPart("picture") MultipartFile file,
                                     Principal principal) {
-        return advertisementService.save(advertisement, principal.getName(), file);
+        return advertisementService.save(advertisement, "aaa", file);
     }
 
     @GetMapping("/search")
