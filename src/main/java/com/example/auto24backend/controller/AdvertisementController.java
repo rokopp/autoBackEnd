@@ -1,12 +1,10 @@
 package com.example.auto24backend.controller;
 
-import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +28,7 @@ public class AdvertisementController {
     public String saveAdvertisement(@RequestPart("ad") Advertisement advertisement,
                                     @RequestPart("picture") MultipartFile file,
                                     Principal principal) {
-        System.out.println(advertisement.getCarSerialNr());
-        System.out.println(advertisement.getDescription());
-        System.out.println(file.getOriginalFilename());
-        return "ye";
-        //return advertisementService.save(advertisement, "aaa");
+        return advertisementService.save(advertisement, principal.getName(), file);
     }
 
     @GetMapping("/search")
