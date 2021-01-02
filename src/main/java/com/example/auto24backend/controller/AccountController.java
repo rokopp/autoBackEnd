@@ -14,22 +14,22 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     
-    @GetMapping("/login")
+    @GetMapping("/api/login")
     public String login() {
         return "login";
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/api/logout")
     public String logout() {
         return "logout";
     }
 
-    @PostMapping("/register")
+    @PostMapping("/api/register")
     public AccountDto register(@RequestBody Account account) {
         return accountService.saveAccount(account);
     }
 
-    @PostMapping("/registerAdmin")
+    @PostMapping("/api/registerAdmin")
     public AccountDto registerAdmin(@RequestBody Account account) {
         return accountService.saveAdmin(account);
     }
