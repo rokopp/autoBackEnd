@@ -1,34 +1,53 @@
 package com.example.auto24backend.security;
 
-import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import com.example.auto24backend.service.MyAccountDetailService;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.reactive.CorsConfigurationSource;
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
-import java.util.Collections;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.web.util.matcher.OrRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
+    private static final RequestMatcher PROTECTED_URLS = new OrRequestMatcher(
+            new AntPathRequestMatcher("/api/user/**"),
+            new AntPathRequestMatcher("/api/admin/**")
+    );
+
+    AuthenticationProvider provider;
+
+    public WebSecurityConfiguration(final AuthenticationProvider authenticationProvider) {
+        super();
+        this.provider = authenticationProvider;
+    }
+
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(provider);
+    }
+
+    @Override
+    public void configure(final WebSecurity webSecurity) {
+        webSecurity.ignoring()
+                .antMatchers("/token/**");
+    }
 
     @Autowired
     private MyAccountDetailService userDetailsService;
@@ -36,34 +55,32 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .userDetailsService(userDetailsService);
-//                .passwordEncoder(encoder());
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(encoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .cors()
-                .and()
                 .csrf().disable()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling()
+                .and()
+                .authenticationProvider(provider)
+                .addFilterBefore(authenticationFilter(), AnonymousAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/ads").permitAll()
                 .antMatchers("/api/ads/search").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/carMarks").permitAll()
-//                .antMatchers(HttpMethod.POST, "/api/carMarks").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/carMarks").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/ads").permitAll()
-//                .antMatchers(HttpMethod.POST, "/registerAdmin").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/registerAdmin").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/admin/carMarks").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/user/ads").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/admin/registerAdmin").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
-                .and()
-                .formLogin().permitAll()
-                .loginProcessingUrl("/perform_login")
-                .successHandler(authenticationSuccessHandler)
-                .failureUrl("http://13.53.200.72/login?error=true")
                 .and()
                 .logout().permitAll()
                 .and()
@@ -76,20 +93,15 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return super.authenticationManager();
+    AuthenticationFilter authenticationFilter() throws Exception {
+        final AuthenticationFilter filter = new AuthenticationFilter(PROTECTED_URLS);
+        filter.setAuthenticationManager(authenticationManager());
+        return filter;
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
+    AuthenticationEntryPoint forbiddenEntryPoint() {
+        return new HttpStatusEntryPoint(HttpStatus.FORBIDDEN);
     }
-
 
 }

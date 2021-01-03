@@ -15,13 +15,14 @@ public class AccountController {
     private AccountService accountService;
     
     @GetMapping("/api/login")
-    public String login() {
-        return "login";
+    public String login(@RequestParam(value = "username") String username,
+                        @RequestParam(value = "password") String password) {
+        return accountService.login(username, password);
     }
 
-    @GetMapping("/api/logout")
-    public String logout() {
-        return "logout";
+    @PostMapping("/api/logout")
+    public String logout(@RequestPart(value = "username") String username) {
+        return username;
     }
 
     @PostMapping("/api/register")
@@ -29,7 +30,7 @@ public class AccountController {
         return accountService.saveAccount(account);
     }
 
-    @PostMapping("/api/registerAdmin")
+    @PostMapping("/api/admin/registerAdmin")
     public AccountDto registerAdmin(@RequestBody Account account) {
         return accountService.saveAdmin(account);
     }

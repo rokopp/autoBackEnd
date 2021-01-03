@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RequestMapping({"api/ads", "api/ads2"})
+@RequestMapping({"api/ads", "api/user/ads"})
 @RestController
 public class AdvertisementController {
 
@@ -38,6 +38,11 @@ public class AdvertisementController {
     public List<AdvertisementDto> findByPrice(@RequestParam("start") Integer start,
                                               @RequestParam("stop") Integer stop) {
         return advertisementService.findByPrice(start, stop);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable int id) {
+        advertisementService.remove((long) id);
     }
 
     @PostMapping("/search")

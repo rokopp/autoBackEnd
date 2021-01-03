@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter @NoArgsConstructor @Builder
 @AllArgsConstructor
-public class Account {
+public class Account implements UserDetails{
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -29,6 +29,66 @@ public class Account {
     private String email;
 
     private String phoneNumber;
+
+    private String token;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     @OneToMany(mappedBy = "account", cascade = {CascadeType.ALL})
     @JsonIgnore

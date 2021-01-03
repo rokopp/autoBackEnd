@@ -67,6 +67,10 @@ public class AdvertisementService {
         return advertisementDtoList;
     }
 
+    public void remove(Long id) {
+        advertisementRepository.deleteById(id);
+    }
+
     private AdvertisementDto convert(Advertisement advertisement) {
         return AdvertisementDto.builder()
                 .id(advertisement.getId())

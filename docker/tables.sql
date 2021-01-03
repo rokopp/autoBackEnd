@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS account (
   id              SERIAL PRIMARY KEY,
   user_name       VARCHAR(20) UNIQUE NOT NULL,
   password		  VARCHAR(255) NOT NULL,
+  token			  VARCHAR(255) UNIQUE NOT NULL,
   email			  VARCHAR(30) UNIQUE NOT NULL,
   phone_number    VARCHAR(10) NOT NULL
 
@@ -53,8 +54,8 @@ INSERT INTO role (name, id) values ('ADMIN', 1);
 INSERT INTO role (name, id) values ('USER', 2);
 INSERT INTO role (name, id) values ('GUEST', 3);
 
-INSERT INTO account(id, user_name, password, email, phone_number) VALUES
-(1, 'aaa', '$2a$10$tq..FDKdH4nVCPQVX9Y0tuBd08IparVCBQgRo12khuclEjPegTpCG', 'wtf', '6656565');
+INSERT INTO account(id, user_name, password, token, email, phone_number) VALUES
+(1, 'aaa', '$2a$10$tq..FDKdH4nVCPQVX9Y0tuBd08IparVCBQgRo12khuclEjPegTpCG', 'testiworks', 'wtf', '6656565');
 
 INSERT INTO account_role(account_id, role_id) VALUES (1, 2);
 INSERT INTO account_role(account_id, role_id) VALUES (1, 1);
