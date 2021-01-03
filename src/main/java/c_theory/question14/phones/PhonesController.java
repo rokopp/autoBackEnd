@@ -83,8 +83,8 @@ public class PhonesController {
     //todo J modify correct method to support searching by price range: priceFrom-priceTo while keeping original functionality
 
     @GetMapping
-    public List<Phone> getPhones(@RequestParam(value = "start", required = false) int start,
-                                 @RequestParam(value = "end", required = false) int end) {
+    public List<Phone> getPhones(@RequestParam(value = "start") int start,
+                                 @RequestParam(value = "end") int end) {
         return null;
     }
 
