@@ -1,7 +1,6 @@
 package com.example.auto24backend.service;
 
 import com.example.auto24backend.database.Account;
-import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.Role;
 import com.example.auto24backend.dto.AccountDto;
 import com.example.auto24backend.repository.AccountRepository;
