@@ -25,8 +25,12 @@ public class AccountController {
     }
 
     @PostMapping("/api/register")
-    public AccountDto register(@RequestBody Account account) {
-        return accountService.saveAccount(account);
+    public String register(@RequestBody Account account) {
+        AccountDto accountDto = accountService.saveAccount(account);
+        if (accountDto != null) {
+            return "Registered";
+        }
+        return "Account already exists";
     }
 
     @PostMapping("/api/admin/registerAdmin")

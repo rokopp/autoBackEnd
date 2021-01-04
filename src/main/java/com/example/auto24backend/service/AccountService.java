@@ -88,14 +88,17 @@ public class AccountService {
     }
 
     public AccountDto saveAccount(Account account) {
-        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-        Role userRole = roleRepository.findByName("USER");
+        if (findUserByUserName(account.getUserName()).getId() < 0) {
+            account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+            Role userRole = roleRepository.findByName("USER");
 
-        String token = UUID.randomUUID().toString();
-        account.setToken(token);
+            String token = UUID.randomUUID().toString();
+            account.setToken(token);
 
-        account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
-        return convert(accountRepository.save(account));
+            account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
+            return convert(accountRepository.save(account));
+        }
+        return null;
     }
 
     public AccountDto saveAdmin(Account account) {
