@@ -111,15 +111,26 @@ public class AccountService {
     }
 
     public AccountDto saveAdmin(Account account) {
-        account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-        Role userRole = roleRepository.findByName("USER");
-        Role adminRole = roleRepository.findByName("ADMIN");
+        String account2 = "";
+        try {
+            account2 = findUserByUserName(account.getUserName()).getUserName();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+        if (account2 != null) {
+            if (account2.length() <= 0) {
+                account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+                Role userRole = roleRepository.findByName("USER");
+                Role adminRole = roleRepository.findByName("ADMIN");
 
-        String token = UUID.randomUUID().toString();
-        account.setToken(token);
+                String token = UUID.randomUUID().toString();
+                account.setToken(token);
 
-        account.setRoleSet(new HashSet<Role>(Arrays.asList(userRole, adminRole)));
-        return convert(accountRepository.save(account));
+                account.setRoleSet(new HashSet<Role>(Arrays.asList(userRole, adminRole)));
+                return convert(accountRepository.save(account));
+            }
+        }
+        return null;
     }
 
     public AccountDto convert(Account account) {

@@ -26,6 +26,7 @@ public class AccountController {
 
     @PostMapping("/api/register")
     public String register(@RequestBody Account account) {
+        if (account.getUserName() == null) return "Error in input";
         AccountDto accountDto = accountService.saveAccount(account);
         if (accountDto != null) {
             return "Registered";
@@ -34,8 +35,13 @@ public class AccountController {
     }
 
     @PostMapping("/api/admin/registerAdmin")
-    public AccountDto registerAdmin(@RequestBody Account account) {
-        return accountService.saveAdmin(account);
+    public String registerAdmin(@RequestBody Account account) {
+        if (account.getUserName() == null) return "Error in input";
+        AccountDto accountDto = accountService.saveAdmin(account);
+        if (accountDto != null) {
+            return "Registered";
+        }
+        return "Account already exists";
     }
 
 }

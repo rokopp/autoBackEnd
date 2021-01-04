@@ -1,7 +1,10 @@
 package com.example.auto24backend.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +15,43 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class AdvertisementControllerTest {
+public class AdvertisementControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+    public void setUp() {
+        JSONObject body = new JSONObject();
+        body.put("userName", "Mina");
+        body.put("password", "Mina");
+        body.put("email", "Mina@Bob.Bob");
+        body.put("phoneNumber", "5628179");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
+
+        this.restTemplate.postForEntity("/api/register", request, String.class);
+    }
+
+    public String getUserToken() throws JsonProcessingException {
+        setUp();
+        Map<String, String> user = new HashMap<>();
+        user.put("username", "Mina");
+        user.put("password", "Mina");
+
+        this.restTemplate.getForEntity("/api/login?username={username}&password={password}", String.class, user);
+        ResponseEntity<String> result2 = this.restTemplate.getForEntity
+                ("/api/login?username={username}&password={password}", String.class, user);
+
+        JSONObject jsonString = new ObjectMapper().readValue(result2.getBody(), JSONObject.class);
+        return (jsonString.getAsString("token"));
+    }
 
     @Test
     public void getAdvertisements() {
@@ -24,32 +59,23 @@ class AdvertisementControllerTest {
         Assert.assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
-    @Disabled
     @Test
     public void testSearchByPrice() {
-        ResponseEntity<String> responseEntity = this.restTemplate.getForEntity("/api/ads/search?start100&stop=200", String.class);
+        ResponseEntity<String> responseEntity = this.restTemplate.getForEntity("/api/ads/search?start=100&stop=200", String.class);
         Assert.assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
 
     @Disabled
     @Test
-    public void testAdvertisementUploadWithoutFile() {
-
-        JSONObject body = new JSONObject();
-        body.put("userName", "Bob");
-        body.put("password", "Bob1234");
-        body.put("email", "Bob@Bob.Bob");
-        body.put("phoneNumber", "5628179");
+    public void testAdvertisementUploadWithoutFile() throws JsonProcessingException {
 
         HttpHeaders headers = new HttpHeaders();
-
-        HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
-
-        ResponseEntity<String> result = this.restTemplate.postForEntity("/api/register", request, String.class);
+        headers.add("Authorization", getUserToken());
+        headers.add("Content-Type","multipart/form-data");
 
         JSONObject carMark = new JSONObject();
-        carMark.put("carMark", "Bmw");
+        carMark.put("carMark", 1);
 
         JSONObject adJson = new JSONObject();
         adJson.put("description", "Mega pill");
@@ -58,7 +84,7 @@ class AdvertisementControllerTest {
         adJson.put("carMark", carMark);
 
         JSONObject ad = new JSONObject();
-        ad.put("userName", "Bob");
+        ad.put("username", "Bob");
         ad.put("ad", adJson);
         ad.put("file", null);
 
@@ -66,7 +92,7 @@ class AdvertisementControllerTest {
 
         HttpEntity<String> requestAd = new HttpEntity<>(ad.toString(), headers);
 
-        ResponseEntity<String> resultAd = this.restTemplate.postForEntity("/api/ads", requestAd, String.class);
+        ResponseEntity<String> resultAd = this.restTemplate.postForEntity("/api/user/ads", requestAd, String.class);
 
         Assert.assertEquals(400, resultAd.getStatusCodeValue());
         Assert.assertEquals("Wrong email", resultAd.getBody());

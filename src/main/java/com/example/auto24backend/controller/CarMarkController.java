@@ -1,6 +1,7 @@
 package com.example.auto24backend.controller;
 
 import com.example.auto24backend.database.CarMark;
+import com.example.auto24backend.exceptions.InvalidCarMarkException;
 import com.example.auto24backend.service.CarMarkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,14 @@ public class CarMarkController {
     }
 
     @PostMapping
-    public CarMark saveCarMark(@RequestBody CarMark carMark) {
-        return carMarkService.save(carMark);
+    public String saveCarMark(@RequestBody CarMark carMark) {
+        try {
+            carMarkService.save(carMark);
+        } catch (InvalidCarMarkException e) {
+            System.out.println(e.getMessage());
+            return e.getMessage();
+        }
+        return "Successfully added";
     }
 
 }
