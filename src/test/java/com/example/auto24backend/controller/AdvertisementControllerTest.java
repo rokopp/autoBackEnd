@@ -65,6 +65,21 @@ public class AdvertisementControllerTest {
         Assert.assertEquals(200, responseEntity.getStatusCodeValue());
     }
 
+    @Test
+    public void testSearchByCarMark() {
+        JSONObject carMark = new JSONObject();
+        carMark.put("id", 1);
+        carMark.put("carMark", "Audi");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> request = new HttpEntity<>(carMark.toString(), headers);
+
+        ResponseEntity<String> responseEntity = this.restTemplate.postForEntity("/api/ads/search",
+                request, String.class);
+        Assert.assertEquals(200, responseEntity.getStatusCodeValue());
+    }
+
 
     @Disabled
     @Test

@@ -121,9 +121,9 @@ public class AccountControllerTest {
     @Test
     public void testRegisterUser() throws JsonProcessingException {
         JSONObject body = new JSONObject();
-        body.put("userName", "Mina");
-        body.put("password", "Mina");
-        body.put("email", "Mina@Bob.Bob");
+        body.put("userName", "MinaSiin");
+        body.put("password", "MinaSiin");
+        body.put("email", "MinaSiin@Bob.Bob");
         body.put("phoneNumber", "5628179");
 
         HttpHeaders headers = new HttpHeaders();
@@ -140,9 +140,9 @@ public class AccountControllerTest {
     @Test
     public void testAdminRegisterWithToken() throws JsonProcessingException {
         JSONObject body = new JSONObject();
-        body.put("userName", "MinaAdmin");
-        body.put("password", "MinaAdmin");
-        body.put("email", "MinaAdmin@Bob.Bob");
+        body.put("userName", "MinaSiinAdmin");
+        body.put("password", "MinaSiinAdmin");
+        body.put("email", "MinaSiinAdmin@Bob.Bob");
         body.put("phoneNumber", "5628179");
 
         HttpHeaders headers = new HttpHeaders();
@@ -160,23 +160,16 @@ public class AccountControllerTest {
     @Test
     public void testAdminDoubleRegisterWithToken() throws JsonProcessingException {
         JSONObject body = new JSONObject();
-        body.put("userName", "BobAdmin");
-        body.put("password", "Bob1234");
-        body.put("email", "BobAdmin@Bob.Bob");
+        body.put("userName", "BobSiinAdmin");
+        body.put("password", "BobSiinAdmin");
+        body.put("email", "BobSiinAdmin@Bob.Bob");
         body.put("phoneNumber", "5628179");
-
-        JSONObject body2 = new JSONObject();
-        body2.put("userName", "BobAdmin");
-        body2.put("password", "Bob1234");
-        body2.put("email", "BobAdmin@Bob.Bob");
-        body2.put("phoneNumber", "5628179");
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", getToken());
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
-        HttpEntity<String> request2 = new HttpEntity<>(body2.toString(), headers);
+        HttpEntity<String> request2 = new HttpEntity<>(body.toString(), headers);
 
         this.restTemplate.postForEntity("/api/admin/registerAdmin", request2, String.class);
         ResponseEntity<String> result2 = this.restTemplate.postForEntity("/api/admin/registerAdmin", request2, String.class);
