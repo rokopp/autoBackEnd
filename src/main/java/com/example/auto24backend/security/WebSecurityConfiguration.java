@@ -24,7 +24,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 
 @Configuration
@@ -83,11 +83,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/ads").permitAll()
-                .antMatchers("/api/ads/search").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/ads/search").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/carMarks").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/admin/carMarks").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/user/ads").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/admin/registerAdmin").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/user/**").hasAuthority("USER")
+                .antMatchers(HttpMethod.POST, "/api/admin/**").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/admin/carMarks/").hasAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/api/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .logout().permitAll()
@@ -115,9 +116,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowedOrigins(Collections.singletonList("*"));
+        configuration.setAllowedMethods(Collections.singletonList("*"));
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

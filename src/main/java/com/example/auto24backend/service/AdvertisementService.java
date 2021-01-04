@@ -3,7 +3,6 @@ package com.example.auto24backend.service;
 import com.example.auto24backend.database.Account;
 import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
-import com.example.auto24backend.database.Picture;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.exceptions.InvalidAdvertisementException;
 import com.example.auto24backend.repository.AdvertisementRepository;
@@ -67,8 +66,9 @@ public class AdvertisementService {
         return advertisementDtoList;
     }
 
-    public void remove(Long id) {
-        advertisementRepository.deleteById(id);
+    public String remove(Long id) {
+        advertisementRepository.delete(id);
+        return "Deleted ad: " + id;
     }
 
     private AdvertisementDto convert(Advertisement advertisement) {

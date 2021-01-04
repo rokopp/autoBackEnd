@@ -62,9 +62,7 @@ public class AccountService {
         return StringUtils.EMPTY;
     }
 
-    public Optional<User> findByToken(String token) {
-        Optional<Account> account = accountRepository.findByToken(token);
-
+    public Optional<User> accountFinder(Optional<Account> account) {
         if(account.isPresent()){
             Account account1 = account.get();
             User user = null;
@@ -75,15 +73,18 @@ public class AccountService {
             if (listOfRoles.contains("ADMIN")) {
                 user= new User(account1.getUserName(), account1.getPassword(), true, true, true, true,
                         AuthorityUtils.createAuthorityList("USER", "ADMIN"));
-            }
-            if (listOfRoles.contains("USER")) {
+            } else {
                 user= new User(account1.getUserName(), account1.getPassword(), true, true, true, true,
                         AuthorityUtils.createAuthorityList("USER"));
             }
-            assert user != null;
             return Optional.of(user);
         }
         return  Optional.empty();
+    }
+
+    public Optional<User> findByToken(String token) {
+        Optional<Account> account = accountRepository.findByToken(token);
+        return accountFinder(account);
     }
     public Account findById(Long id) {
         Optional<Account> account= accountRepository.findById(id);

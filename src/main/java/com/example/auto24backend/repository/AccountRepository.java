@@ -14,5 +14,4 @@ public interface AccountRepository extends PagingAndSortingRepository<Account, L
     @Query(value = "SELECT u FROM Account u where u.userName = ?1")
     Optional<Account> login(String username);
     Optional<Account> findByToken(String token);
-
 }

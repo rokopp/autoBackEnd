@@ -4,18 +4,14 @@ import com.example.auto24backend.database.Advertisement;
 import com.example.auto24backend.database.CarMark;
 import com.example.auto24backend.dto.AdvertisementDto;
 import com.example.auto24backend.service.AdvertisementService;
-import com.sun.security.auth.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.security.Principal;
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
-@RequestMapping({"api/ads", "api/user/ads"})
+@RequestMapping({"api/ads", "api/user/ads", "api/admin/ads"})
 @RestController
 public class AdvertisementController {
 
@@ -41,8 +37,8 @@ public class AdvertisementController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable int id) {
-        advertisementService.remove((long) id);
+    public String delete(@PathVariable Long id) {
+        return advertisementService.remove(id);
     }
 
     @PostMapping("/search")

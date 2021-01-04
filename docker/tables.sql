@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS picture (
 	file_name			VARCHAR(255) UNIQUE NOT NULL,
 	advertisement_id 	INT NOT NULL,
 	FOREIGN KEY (advertisement_id)
-		REFERENCES advertisement (id)
+        REFERENCES advertisement (id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS role (
