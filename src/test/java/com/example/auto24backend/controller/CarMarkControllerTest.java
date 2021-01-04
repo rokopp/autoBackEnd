@@ -44,7 +44,7 @@ public class CarMarkControllerTest {
     @Test
     public void saveCarMark() throws JsonProcessingException {
         JSONObject body = new JSONObject();
-        body.put("carMark", "BMW");
+        body.put("carMark", "Maserati");
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", getAdminToken());
