@@ -29,6 +29,7 @@ public class AccountService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Account findUserByUserName(String userName) {
+        System.out.println("accountservice" + userName);
         return accountRepository.findByUserName(userName);
     }
 
@@ -88,15 +89,23 @@ public class AccountService {
     }
 
     public AccountDto saveAccount(Account account) {
-        if (findUserByUserName(account.getUserName()).getId() < 0) {
-            account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-            Role userRole = roleRepository.findByName("USER");
+        String account2 = "";
+        try {
+            account2 = findUserByUserName(account.getUserName()).getUserName();
+        } catch (NullPointerException e) {
+            System.out.println(e);
+        }
+        if (account2 != null) {
+            if (account2.length() <= 0) {
+                account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+                Role userRole = roleRepository.findByName("USER");
 
-            String token = UUID.randomUUID().toString();
-            account.setToken(token);
+                String token = UUID.randomUUID().toString();
+                account.setToken(token);
 
-            account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
-            return convert(accountRepository.save(account));
+                account.setRoleSet(new HashSet<Role>(Collections.singletonList(userRole)));
+                return convert(accountRepository.save(account));
+            }
         }
         return null;
     }

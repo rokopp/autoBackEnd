@@ -51,7 +51,7 @@ public class PictureService {
         try {
 
             Path currentRelativePath = Paths.get("");
-            String s = currentRelativePath.toRealPath().toString() + "/src/main/pictures";
+            String s = currentRelativePath.toRealPath().toString() + "/pictures";
             picturesPath = Paths.get(s);
 
             File directory = new File(picturesPath.toString());
