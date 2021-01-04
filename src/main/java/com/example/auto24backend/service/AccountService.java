@@ -86,10 +86,6 @@ public class AccountService {
         Optional<Account> account = accountRepository.findByToken(token);
         return accountFinder(account);
     }
-    public Account findById(Long id) {
-        Optional<Account> account= accountRepository.findById(id);
-        return account.orElse(null);
-    }
 
     public AccountDto saveAccount(Account account) {
         account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));

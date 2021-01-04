@@ -48,13 +48,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.authenticationProvider(provider);
     }
 
-    @Override
-    public void configure(final WebSecurity webSecurity) {
-        webSecurity.ignoring()
-                .antMatchers("/token/**");
-    }
-
-
     @Autowired
     private MyAccountDetailService userDetailsService;
 
@@ -84,6 +77,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/register").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/ads").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/ads/search").permitAll()
+                .antMatchers(HttpMethod.POST,"/api/ads/search").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/carMarks").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/user/**").hasAuthority("USER")
                 .antMatchers(HttpMethod.POST, "/api/admin/**").hasAuthority("ADMIN")
