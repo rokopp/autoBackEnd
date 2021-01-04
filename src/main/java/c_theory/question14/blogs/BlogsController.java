@@ -1,5 +1,12 @@
 package c_theory.question14.blogs;
 
+import c_theory.question14.phones.Phone;
+import org.jboss.logging.BasicLogger;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+
 public class BlogsController {
 
     //todo for question 14 there are 4 assignments in total
@@ -18,18 +25,48 @@ public class BlogsController {
     //todo A add necessary annotations on the class
 
     //todo B create a method to query blogs (plural)
+    @GetMapping
+    public List<Blog> getBlogs() {
+        return null;
+    }
 
     //todo C create a method to query single blog
+    
+    @GetMapping({"name"})
+    public Blog getBlog(@PathVariable String name) {
+        return null;
+    } 
 
     //todo D create a method to save a new blog
+    
+    @PostMapping
+    public Blog saveBlog(@RequestBody Blog blog) {
+        return null;
+    }
 
-    //todo E create a method to update a bog
+    //todo E create a method to update a blog
+
+    @PutMapping("{name}")
+    public Blog updateBlog(@RequestBody Blog blog, @PathVariable String name) {
+        return null;
+    }
+
 
     //todo F create a method to delete a blog
+
+    @DeleteMapping("{name}")
+    public String deleteBlog(@PathVariable String name) {
+        return name + " Deleted";
+    }
 
     //todo G assuming each blog has only 1 author (one-to-one relation) create a method to query blog's author
 
     //todo H create a method to update blog url (and nothing else)
+
+    @PutMapping("{name}/{url}")
+    public Blog updateUrl(@PathVariable String name, @PathVariable String url) {
+        return null;
+    }
 
     //todo I-J modify correct method to support pagination, pagination is done by page and size
     //todo I add page (pagination starts at page 1)
