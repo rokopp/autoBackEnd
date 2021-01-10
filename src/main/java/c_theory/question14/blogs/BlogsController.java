@@ -26,14 +26,20 @@ public class BlogsController {
 
     //todo B create a method to query blogs (plural)
     @GetMapping
-    public List<Blog> getBlogs() {
+    public List<Blog> getAllBlogs(
+            @RequestParam(defaultValue = "1") long page,
+            @RequestParam(defaultValue = "20") long size,
+            @RequestParam(defaultValue = "popularFirst") String sortingMethod
+    ) {
+        //return blogService.getAllBlogs(page, size, sortingMethod)
         return null;
     }
 
     //todo C create a method to query single blog
     
-    @GetMapping({"name"})
-    public Blog getBlog(@PathVariable String name) {
+    @GetMapping({"id"})
+    public Blog getBlog(@PathVariable String id) {
+        // return blogService.findById(id)
         return null;
     } 
 
@@ -46,25 +52,33 @@ public class BlogsController {
 
     //todo E create a method to update a blog
 
-    @PutMapping("{name}")
-    public Blog updateBlog(@RequestBody Blog blog, @PathVariable String name) {
-        return null;
+    @PutMapping("{id}")
+    public void updateBlog(@RequestBody Blog blog, @PathVariable String id) {
+        //blogService.updateBlog(id, blog);
     }
 
 
     //todo F create a method to delete a blog
 
-    @DeleteMapping("{name}")
-    public String deleteBlog(@PathVariable String name) {
-        return name + " Deleted";
+    @DeleteMapping("{id}")
+    public String deleteBlog(@PathVariable String id) {
+        //blogService.deleteById(id)
+        return "Deleted";
     }
 
     //todo G assuming each blog has only 1 author (one-to-one relation) create a method to query blog's author
 
+    @GetMapping("{id}/author")
+    public Author getBlogAuthor(@PathVariable long id){
+        //return blogService.findById(id).getAuthor();
+        return null;
+    }
+
     //todo H create a method to update blog url (and nothing else)
 
-    @PutMapping("{name}/{url}")
-    public Blog updateUrl(@PathVariable String name, @PathVariable String url) {
+    @PutMapping("{id}/{url}")
+    public Blog updateUrl(@PathVariable String id, @PathVariable String url) {
+        //blogService.updateUrl(id, url);
         return null;
     }
 
