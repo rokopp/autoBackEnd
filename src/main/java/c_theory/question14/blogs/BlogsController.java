@@ -1,12 +1,12 @@
 package c_theory.question14.blogs;
 
-import c_theory.question14.phones.Phone;
-import org.jboss.logging.BasicLogger;
 import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/blogs")
 public class BlogsController {
 
     //todo for question 14 there are 4 assignments in total
