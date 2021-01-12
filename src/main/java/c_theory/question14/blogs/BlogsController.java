@@ -68,8 +68,9 @@ public class BlogsController {
 
     //todo G assuming each blog has only 1 author (one-to-one relation) create a method to query blog's author
 
-    @GetMapping("{id}/author")
-    public Author getBlogAuthor(@PathVariable long id){
+    @GetMapping("{id}/{authorDisplayName}")
+    public Author getBlogAuthor(@PathVariable long id,
+                                @PathVariable String authorDisplayName){
         //return blogService.findById(id).getAuthor();
         return null;
     }
